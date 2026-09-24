@@ -1,0 +1,36 @@
+{
+  "name": "glucosesense-dia-predict",
+  "version": "2.1.0",
+  "description": "Industrial-Grade Healthcare Decision Support System for Type 2 Diabetes Risk Stratification with Explainable AI (SHAP)",
+  "main": "scripts/dev-server.js",
+  "scripts": {
+    "dev": "node scripts/dev-server.js",
+    "start": "node scripts/dev-server.js",
+    "dev:backend": "python server/app.py",
+    "test": "node scripts/run-tests.js",
+    "test:backend": "python -m unittest discover -s server/tests",
+    "train": "python ml/scripts/train_model.py",
+    "clean": "node scripts/clean.js",
+    "lint": "node scripts/lint.js",
+    "format": "node scripts/format.js"
+  },
+  "keywords": [
+    "diabetes-prediction",
+    "machine-learning",
+    "explainable-ai",
+    "shap",
+    "healthcare",
+    "scikit-learn",
+    "decision-support",
+    "medical-informatics"
+  ],
+  "author": "Ayush Sharma",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "http-proxy-middleware": "^3.0.3",
+    "open": "^10.1.0"
+  },
+  "devDependencies": {}
+}

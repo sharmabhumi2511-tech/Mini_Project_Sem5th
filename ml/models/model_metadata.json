@@ -1,0 +1,44 @@
+{
+  "model_name": "Support Vector Classifier (RBF Kernel)",
+  "model_pipeline": [
+    {
+      "step": "imputer",
+      "method": "SimpleImputer",
+      "strategy": "median"
+    },
+    {
+      "step": "scaler",
+      "method": "StandardScaler"
+    },
+    {
+      "step": "classifier",
+      "method": "SVC",
+      "kernel": "rbf",
+      "probability": true
+    }
+  ],
+  "training_date": "2026-09-24T11:55:52.962289",
+  "dataset": {
+    "source": "Pima Indians Diabetes Database",
+    "total_records": 768,
+    "features": [
+      "Pregnancies",
+      "Glucose",
+      "BloodPressure",
+      "SkinThickness",
+      "Insulin",
+      "BMI",
+      "DiabetesPedigreeFunction",
+      "Age"
+    ],
+    "target": "Outcome"
+  },
+  "metrics": {
+    "train_accuracy": 0.8404,
+    "test_accuracy": 0.7403,
+    "test_roc_auc": 0.7964,
+    "cv_accuracy_mean": 0.7801,
+    "cv_roc_auc_mean": 0.8333
+  },
+  "version": "2.1.0"
+}

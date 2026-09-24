@@ -1,0 +1,1857 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GlucoseSense / DIA-PREDICT — Calm, Transparent Diabetes Risk Decision Support</title>
+  <meta name="description" content="Understand your diabetes risk with a simple, data-driven health assessment and explainable AI insights.">
+  
+  <!-- Modern Healthcare Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+  
+  <!-- Brand Favicon -->
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ========================================================================
+     PUBLIC LANDING PAGE
+     ======================================================================== -->
+<div id="view-landing">
+  
+  <!-- Landing Navigation -->
+  <header class="landing-header">
+    <div class="landing-nav-container">
+      <div class="brand-badge" id="landingBrandLogo" style="cursor: pointer;">
+        <div class="brand-icon-leaf">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+          </svg>
+        </div>
+        <div class="brand-title-wrap">
+          <span class="brand-name">GlucoseSense</span>
+          <span class="brand-tagline">DIA-PREDICT • DECISION SUPPORT</span>
+        </div>
+      </div>
+
+      <ul class="landing-nav-links">
+        <li><a href="#landing-hero">Home</a></li>
+        <li><a href="#landing-features">Features</a></li>
+        <li><a href="#landing-how-it-works">How It Works</a></li>
+        <li><a href="#landing-trust">About</a></li>
+        <li><a href="#landing-disclaimer">Resources</a></li>
+        <li><a href="#landing-disclaimer">Contact</a></li>
+      </ul>
+
+      <div class="landing-nav-actions">
+        <button class="theme-toggle-btn" id="landingThemeToggleBtn" style="padding: 0.45rem 0.85rem; width: auto;" aria-label="Toggle theme">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+            <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+          </svg>
+        </button>
+        <button class="btn btn-secondary btn-sm" id="landingLoginBtn">Login</button>
+        <button class="btn btn-primary btn-sm" id="landingSignUpBtn">Sign Up</button>
+        <button class="btn btn-subtle btn-sm" id="landingLaunchAppBtn" title="Direct to Clinical Dashboard">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
+          Dashboard
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="landing-hero" id="landing-hero">
+    <div class="hero-content">
+      <div class="hero-eyebrow">
+        <span>PREVENT</span> • <span>TRACK</span> • <span>UNDERSTAND</span> • <span>STAY HEALTHIER</span>
+      </div>
+      <h1>Early Awareness<br><span class="text-highlight">For A Healthier You</span></h1>
+      <p>
+        Understand your diabetes risk with a simple, data-driven health assessment. 
+        GlucoseSense helps you make sense of your health information so you can take informed next steps.
+      </p>
+      <div class="hero-cta-group">
+        <button class="btn btn-primary btn-lg" id="heroGetStartedBtn">
+          Get Started →
+        </button>
+        <button class="btn btn-secondary btn-lg" id="heroLearnMoreBtn">Learn More</button>
+      </div>
+
+      <div class="hero-badges-strip">
+        <span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Research Based</span>
+        <span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Easy To Use</span>
+        <span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Your Data Stays Private</span>
+      </div>
+    </div>
+
+    <!-- NO PHOTO HERO VISUAL: HEALTH SNAPSHOT PANEL (Pure HTML/CSS/SVG) -->
+    <div class="hero-snapshot-card">
+      <div class="snapshot-header">
+        <div class="snapshot-title">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+          Your Health Snapshot
+        </div>
+        <div class="snapshot-live-indicator">
+          <span class="snapshot-live-dot"></span>
+          <span>Up to date</span>
+        </div>
+      </div>
+
+      <!-- 3 Key Metric Tiles -->
+      <div class="snapshot-grid">
+        <div class="snapshot-tile">
+          <div class="snapshot-tile-label">
+            <span style="color: var(--secondary);">💧</span> Fasting Glucose
+          </div>
+          <div class="snapshot-tile-value">98 <small style="font-size: 0.75rem; color: var(--text-muted);">mg/dL</small></div>
+          <div class="snapshot-tile-chip status-healthy">Normal Range</div>
+        </div>
+
+        <div class="snapshot-tile">
+          <div class="snapshot-tile-label">
+            <span style="color: var(--primary);">♥</span> Estimated Risk
+          </div>
+          <div class="snapshot-tile-value">18%</div>
+          <div class="snapshot-tile-chip status-healthy">Low Risk</div>
+        </div>
+
+        <div class="snapshot-tile">
+          <div class="snapshot-tile-label">
+            <span style="color: var(--primary);">↗</span> Health Trend
+          </div>
+          <div class="snapshot-tile-value" style="font-size: 1.15rem; color: var(--primary); margin-top: 0.4rem;">Improving</div>
+          <div class="snapshot-tile-chip status-healthy">+11% Better</div>
+        </div>
+      </div>
+
+      <!-- Human-Centered Health Illustration (Inline SVG - zero external dependencies) -->
+      <div class="snapshot-svg-area">
+        <svg width="84" height="84" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink: 0;">
+          <circle cx="50" cy="50" r="46" fill="var(--primary-soft)" stroke="var(--primary)" stroke-width="1.5" stroke-dasharray="3 3"/>
+          <!-- Peaceful Human Walking/Wellness Figure -->
+          <circle cx="50" cy="30" r="10" fill="var(--primary)"/>
+          <path d="M36 78 L46 54 L42 44 C44 42, 56 42, 58 44 L54 54 L64 78" stroke="var(--primary)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M34 50 Q50 38 66 50" stroke="var(--secondary)" stroke-width="3" stroke-linecap="round" fill="none"/>
+          <!-- Wellness Heart Leaf -->
+          <circle cx="70" cy="24" r="5" fill="#10B981"/>
+        </svg>
+        <div class="snapshot-svg-caption">
+          <strong>Understand your health a little better.</strong><br>
+          Automated risk approximations and personal metrics designed for early awareness, keeping you informed before your next doctor visit.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 Feature Items -->
+  <section class="landing-features-strip" id="landing-features">
+    <div class="features-container">
+      <div class="section-tag">CORE CAPABILITIES</div>
+      <h2 class="section-title">Evidence-Informed Diabetes Awareness</h2>
+      <p class="section-subtitle">Simple tools to help you understand your health information and track changes over time.</p>
+
+      <div class="feature-cards-grid">
+        <div class="feature-box">
+          <div class="feature-icon-wrap">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          </div>
+          <h3>AI-Assisted Prediction</h3>
+          <p>Data-driven risk estimation powered by machine learning algorithms.</p>
+        </div>
+
+        <div class="feature-box">
+          <div class="feature-icon-wrap">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          </div>
+          <h3>Track Your Progress</h3>
+          <p>Monitor glucose and assessment history across sequential evaluations.</p>
+        </div>
+
+        <div class="feature-box">
+          <div class="feature-icon-wrap">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+          </div>
+          <h3>Understand Your Risk</h3>
+          <p>See which factors influenced the model result through clear feature breakdowns.</p>
+        </div>
+
+        <div class="feature-box">
+          <div class="feature-icon-wrap">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <h3>Stay Informed</h3>
+          <p>Explore general health-awareness insights and evidence-based wellness observations.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Human Trust Section -->
+  <section class="human-trust-section" id="landing-trust">
+    <div class="trust-card-banner">
+      <div>
+        <div class="section-tag">TRANSPARENCY & CLARITY</div>
+        <h2 style="font-size: 2rem; font-weight: 800; line-height: 1.2; margin-bottom: 1rem; color: var(--text-primary);">
+          Numbers are easier to understand when you know what they mean.
+        </h2>
+        <p style="font-size: 1rem; color: var(--text-secondary); line-height: 1.6;">
+          Healthcare data shouldn't feel like an opaque algorithm. GlucoseSense breaks down predictive probabilities into understandable human components.
+        </p>
+      </div>
+
+      <div class="trust-points-list">
+        <div class="trust-point-item">
+          <div class="trust-point-icon">✓</div>
+          <div class="trust-point-text">
+            <h4>Risk is an automated estimate</h4>
+            <p>Calculated using statistical patterns from clinical benchmarks, giving you an early directional snapshot.</p>
+          </div>
+        </div>
+
+        <div class="trust-point-item">
+          <div class="trust-point-icon">✓</div>
+          <div class="trust-point-text">
+            <h4>Results reflect your entered information</h4>
+            <p>Accurate metabolic markers (glucose, BMI, blood pressure) yield more dependable estimations.</p>
+          </div>
+        </div>
+
+        <div class="trust-point-item">
+          <div class="trust-point-icon">✓</div>
+          <div class="trust-point-text">
+            <h4>Transparent contributing factors</h4>
+            <p>SHAP explanations show exactly which physical markers shifted your score up or down.</p>
+          </div>
+        </div>
+
+        <div class="trust-point-item">
+          <div class="trust-point-icon">✓</div>
+          <div class="trust-point-text">
+            <h4>Decision-support, never a diagnosis</h4>
+            <p>Designed to support productive conversations with your doctor, not replace medical consultation.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works (4 Steps) -->
+  <section class="landing-pipeline" id="landing-how-it-works">
+    <div class="section-tag">SIMPLE PROCESS</div>
+    <h2 class="section-title">How It Works</h2>
+    <p class="section-subtitle">Four straightforward steps to take control of your metabolic awareness.</p>
+
+    <div class="pipeline-steps">
+      <div class="pipeline-step">
+        <div class="pipeline-step-num">01</div>
+        <div class="pipeline-step-title">Enter Your Information</div>
+        <div class="pipeline-step-desc">Input standard health markers like fasting blood sugar, blood pressure, and BMI.</div>
+      </div>
+      <div class="pipeline-step">
+        <div class="pipeline-step-num">02</div>
+        <div class="pipeline-step-title">Check Your Risk</div>
+        <div class="pipeline-step-desc">Tuned machine learning evaluates your feature indicators to produce a risk estimate.</div>
+      </div>
+      <div class="pipeline-step">
+        <div class="pipeline-step-num">03</div>
+        <div class="pipeline-step-title">Understand What Influenced It</div>
+        <div class="pipeline-step-desc">View transparent factor contributions showing what factors established your score.</div>
+      </div>
+      <div class="pipeline-step">
+        <div class="pipeline-step-num">04</div>
+        <div class="pipeline-step-title">Track Your Progress</div>
+        <div class="pipeline-step-desc">Log longitudinal glucose checks and observe how proactive habits lower risk.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Notice Banner -->
+  <div class="landing-disclaimer" id="landing-disclaimer">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/>
+    </svg>
+    <p>
+      <strong>Important Academic & Health Notice:</strong> This tool is intended for academic research and health-risk awareness only. It does not provide medical diagnosis, treatment recommendations, or replace professional medical advice. Always consult a qualified healthcare provider for clinical decisions.
+    </p>
+  </div>
+
+  <!-- Footer -->
+  <footer class="landing-footer">
+    <div class="footer-inner">
+      <div class="footer-copy">
+        © 2026 GlucoseSense / DIA-PREDICT. Research-Based Healthcare Decision Support System.
+      </div>
+      <div class="footer-links">
+        <a href="#landing-hero">Home</a>
+        <a href="#landing-features">Features</a>
+        <a href="#landing-how-it-works">How It Works</a>
+        <a href="#landing-trust">About</a>
+        <a href="#landing-disclaimer">Notice</a>
+      </div>
+    </div>
+  </footer>
+
+</div>
+
+<!-- ========================================================================
+     IN-APP SHELL (DASHBOARD, PREDICTIONS, REPORTS, GLUCOSE, PROFILE)
+     ======================================================================== -->
+<div class="app-layout" id="app-layout" style="display: none;">
+  
+  <!-- DESKTOP SIDEBAR -->
+  <aside class="sidebar">
+    <div>
+      <div class="brand-block" id="sidebarBrandBlock" title="Return to Landing Overview">
+        <div class="brand-icon-leaf" style="width: 32px; height: 32px;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+          </svg>
+        </div>
+        <div class="brand-title-wrap">
+          <span class="brand-name" style="font-size: 1.05rem;">GlucoseSense</span>
+          <span class="brand-tagline">DIA-PREDICT</span>
+        </div>
+      </div>
+
+      <nav>
+        <ul class="nav-list">
+          <li>
+            <button class="nav-link active" data-nav="overview">
+              <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+              Dashboard
+            </button>
+          </li>
+          <li>
+            <button class="nav-link" data-nav="assess">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              Check My Risk
+            </button>
+          </li>
+          <li>
+            <button class="nav-link" data-nav="reports">
+              <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+              My Reports
+            </button>
+          </li>
+          <li>
+            <button class="nav-link" data-nav="glucose">
+              <svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+              Track Glucose
+            </button>
+          </li>
+          <li>
+            <button class="nav-link" data-nav="insights">
+              <svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+              Health Insights
+            </button>
+          </li>
+          <li>
+            <button class="nav-link" data-nav="profile">
+              <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              Profile
+            </button>
+          </li>
+          <li>
+            <button class="nav-link" data-nav="settings">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+              Settings
+            </button>
+          </li>
+        </ul>
+      </nav>
+    </div>
+
+    <div class="sidebar-footer">
+      <button class="theme-toggle-btn" id="themeToggleBtn" aria-label="Toggle theme">
+        <span id="themeToggleLabel">Theme: Light</span>
+        <svg id="themeToggleIcon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+          <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+        </svg>
+      </button>
+      <button class="btn btn-secondary btn-sm" style="width: 100%;" id="openQuickLogBtn">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Add Glucose Reading
+      </button>
+      <button class="nav-link" id="logoutBtn" style="color: var(--status-elevated); margin-top: 0.25rem;">
+        <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        Logout
+      </button>
+    </div>
+  </aside>
+
+  <!-- MAIN VIEWPORT -->
+  <main class="main-viewport">
+    
+    <!-- TOP HEADER -->
+    <header class="top-nav-bar">
+      <div class="page-title-group">
+        <h1 id="viewHeading">Dashboard</h1>
+        <p id="viewSubheading">Here's a quick look at your recent health activity.</p>
+      </div>
+
+      <div class="top-user-actions">
+        <!-- Notification Bell -->
+        <button class="notification-bell-btn" id="notificationBellBtn" aria-label="Notifications">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+            <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+          </svg>
+          <span class="notification-dot" id="notificationDot"></span>
+        </button>
+
+        <!-- Notification Popover -->
+        <div class="notification-popover" id="notificationPopover">
+          <div class="notification-popover-header">
+            <span style="font-weight: 700; font-size: 0.88rem;">Notifications</span>
+            <button class="btn btn-subtle btn-sm" id="markAllReadBtn" style="font-size: 0.75rem;">Clear</button>
+          </div>
+          <div class="notification-list" id="notificationList">
+            <div class="notification-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" style="flex-shrink: 0;"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 14 14"/></svg>
+              <div>Your morning fasting glucose is in recommended limits.</div>
+            </div>
+            <div class="notification-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--secondary)" stroke-width="2" style="flex-shrink: 0;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg>
+              <div>New assessment factor breakdown available for review.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- User Profile Badge -->
+        <div class="user-profile-pill" id="headerUserPill" title="View Profile">
+          <div class="user-avatar-circle" id="headerAvatarCircle">A</div>
+          <div>
+            <div class="user-name-text" id="headerUserName">Ayush Sharma</div>
+            <div class="user-role-text">General User</div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- TAB 1: OVERVIEW / DASHBOARD -->
+    <section id="view-overview" class="app-tab">
+      
+      <!-- 4-METRIC TOP STRIP -->
+      <div class="metric-strip" style="margin-bottom: 1.5rem;">
+        <div class="metric-card">
+          <div class="metric-label">Latest Assessment <span>Status</span></div>
+          <div class="metric-number" style="font-size: 1.4rem; margin-top: 0.5rem;" id="dashLastRiskBadge">
+            <span class="status-badge status-healthy" id="dashRiskPill">
+              <span class="status-indicator-dot"></span>
+              <span id="dashRiskCategory">Low Risk</span>
+            </span>
+          </div>
+          <div class="metric-footnote" id="dashLastPredictionTime">Updated 2 days ago</div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-label">Total Reports <span>History</span></div>
+          <div class="metric-number" id="dashTotalReports">12</div>
+          <div class="metric-footnote" style="color: var(--primary); cursor: pointer;" id="dashViewHistoryLink">View History →</div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-label">Average Glucose <span>Rolling</span></div>
+          <div class="metric-number" id="dashAvgGlucose">102 <small>mg/dL</small></div>
+          <div class="metric-footnote">Across active logs</div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-label">Recent Trend <span>Trajectory</span></div>
+          <div class="metric-number" style="color: var(--primary); font-size: 1.4rem; display: flex; align-items: center; gap: 0.35rem;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+            Improving
+          </div>
+          <div class="metric-footnote">+11% favorable trajectory</div>
+        </div>
+      </div>
+
+      <div class="editorial-grid">
+        
+        <!-- Glucose Trend Chart -->
+        <div class="card" style="grid-column: span 8;">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Glucose Trend</div>
+              <div class="card-subtitle">Home glucose measurements over time with reference corridor</div>
+            </div>
+            <span class="status-badge status-healthy" style="font-size: 0.72rem;">Target: 70–110 mg/dL</span>
+          </div>
+
+          <div class="chart-box">
+            <svg class="chart-svg" viewBox="0 0 600 180" preserveAspectRatio="none" id="dashboardGlucoseChart">
+              <defs>
+                <linearGradient id="chartGreenGradient" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="var(--primary)" stop-opacity="0.3"/>
+                  <stop offset="100%" stop-color="var(--primary)" stop-opacity="0"/>
+                </linearGradient>
+              </defs>
+              <rect x="0" y="55" width="600" height="75" fill="var(--primary-soft)" opacity="0.6"/>
+              <line x1="0" y1="130" x2="600" y2="130" stroke="var(--border)" stroke-dasharray="3 3"/>
+              <line x1="0" y1="55" x2="600" y2="55" stroke="var(--border)" stroke-dasharray="3 3"/>
+              <polygon class="chart-area" points="40,110 130,85 220,105 310,75 400,90 490,65 570,80 570,160 40,160"></polygon>
+              <polyline class="chart-line" points="40,110 130,85 220,105 310,75 400,90 490,65 570,80"></polyline>
+              <circle class="chart-point" cx="40" cy="110"><title>01 Aug: 95 mg/dL</title></circle>
+              <circle class="chart-point" cx="130" cy="85"><title>08 Aug: 104 mg/dL</title></circle>
+              <circle class="chart-point" cx="220" cy="105"><title>15 Aug: 97 mg/dL</title></circle>
+              <circle class="chart-point" cx="310" cy="75"><title>22 Aug: 108 mg/dL</title></circle>
+              <circle class="chart-point" cx="400" cy="90"><title>29 Aug: 102 mg/dL</title></circle>
+              <circle class="chart-point" cx="490" cy="65"><title>05 Sep: 112 mg/dL</title></circle>
+              <circle class="chart-point" cx="570" cy="80"><title>Today: 98 mg/dL</title></circle>
+            </svg>
+          </div>
+          <div style="display: flex; justify-content: space-between; margin-top: 0.75rem; padding: 0 0.5rem;">
+            <span class="chart-axis-label">01 Aug</span>
+            <span class="chart-axis-label">15 Aug</span>
+            <span class="chart-axis-label">29 Aug</span>
+            <span class="chart-axis-label">Today (98 mg/dL)</span>
+          </div>
+        </div>
+
+        <!-- Quick Actions Card -->
+        <div class="card" style="grid-column: span 4;">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Quick Actions</div>
+              <div class="card-subtitle">Take care of your health today</div>
+            </div>
+          </div>
+
+          <div class="quick-action-item" id="qaNewPrediction" style="background: var(--primary-soft); border-color: var(--primary);">
+            <div class="quick-action-left">
+              <div class="quick-action-icon" style="background: var(--primary); color: #FFFFFF;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+              </div>
+              <span style="color: var(--primary); font-weight: 700;">Check My Risk</span>
+            </div>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </div>
+
+          <div class="quick-action-item" id="qaViewReports">
+            <div class="quick-action-left">
+              <div class="quick-action-icon" style="background: var(--secondary-soft); color: var(--secondary);">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+              </div>
+              <span>View My Reports</span>
+            </div>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+          </div>
+
+          <div class="quick-action-item" id="qaTrackGlucose">
+            <div class="quick-action-left">
+              <div class="quick-action-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+              </div>
+              <span>Add Glucose Reading</span>
+            </div>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+          </div>
+
+          <div class="quick-action-item" id="qaHealthTips">
+            <div class="quick-action-left">
+              <div class="quick-action-icon" style="background: var(--warning-bg); color: var(--warning);">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+              </div>
+              <span>Health Insights</span>
+            </div>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+          </div>
+        </div>
+
+        <!-- Risk Trend Chart (Across Assessments) -->
+        <div class="card" style="grid-column: span 6;">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Risk Trend</div>
+              <div class="card-subtitle">Estimated risk probability across sequential assessments</div>
+            </div>
+            <span class="status-badge status-healthy" style="font-size: 0.72rem;">Steady decrease</span>
+          </div>
+          <div class="chart-box" style="height: 160px;">
+            <svg class="chart-svg" viewBox="0 0 500 140" preserveAspectRatio="none">
+              <line x1="0" y1="110" x2="500" y2="110" stroke="var(--border)" stroke-dasharray="3 3"/>
+              <line x1="0" y1="50" x2="500" y2="50" stroke="var(--border)" stroke-dasharray="3 3"/>
+              <polyline class="chart-line-secondary" points="40,50 180,68 320,84 460,98"></polyline>
+              <circle class="chart-point" cx="40" cy="50"><title>12 Aug: 29%</title></circle>
+              <circle class="chart-point" cx="180" cy="68"><title>28 Aug: 26%</title></circle>
+              <circle class="chart-point" cx="320" cy="84"><title>04 Sep: 22%</title></circle>
+              <circle class="chart-point" cx="460" cy="98"><title>10 Sep: 18%</title></circle>
+            </svg>
+          </div>
+          <div style="display: flex; justify-content: space-between; margin-top: 0.5rem;">
+            <span class="chart-axis-label">12 Aug (29%)</span>
+            <span class="chart-axis-label">28 Aug (26%)</span>
+            <span class="chart-axis-label">04 Sep (22%)</span>
+            <span class="chart-axis-label">Today (18%)</span>
+          </div>
+        </div>
+
+        <!-- Latest Report Summary Card -->
+        <div class="card" style="grid-column: span 6; display: flex; flex-direction: column; justify-content: space-between;">
+          <div>
+            <div class="card-title">Latest Assessment Summary</div>
+            <div style="font-size: 1.25rem; font-weight: 800; color: var(--text-primary); margin-top: 0.45rem;" id="dashLatestReportDate">
+              10 Sep 2026, 10:30 AM
+            </div>
+            <p style="font-size: 0.9rem; color: var(--text-secondary); margin-top: 0.5rem; line-height: 1.5;">
+              Estimated Risk: <strong id="dashLatestReportRisk" style="color: var(--primary);">Low Risk (18%)</strong> • Fasting Glucose: <strong id="dashLatestReportGlucose">98 mg/dL</strong>
+            </p>
+          </div>
+          <div style="margin-top: 1.5rem;">
+            <button class="btn btn-secondary btn-sm" id="dashViewLatestReportBtn">View Full Assessment Details →</button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Decision Support Notice -->
+      <div class="landing-disclaimer" style="margin-top: 2rem; margin-bottom: 0;">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/>
+        </svg>
+        <p>
+          <strong>Decision-Support Notice:</strong> GlucoseSense calculates algorithmic probabilities based on classical statistical associations. Predictions are risk estimates for early awareness and educational reflection; they do not constitute clinical diagnoses or treatment recommendations.
+        </p>
+      </div>
+    </section>
+
+    <!-- TAB 2: NEW PREDICTION FORM -->
+    <section id="view-assess" class="app-tab" style="display: none;">
+      <div class="editorial-grid">
+        
+        <!-- Form Column -->
+        <div class="card" style="grid-column: span 8;">
+          <div class="card-header">
+            <div>
+              <h2 style="font-size: 1.35rem; font-weight: 800; color: var(--text-primary);">Check Your Diabetes Risk</h2>
+              <div class="card-subtitle">Enter your latest health information to generate an estimated risk assessment.</div>
+            </div>
+          </div>
+
+          <form id="predictionForm" novalidate>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem;">
+              
+              <!-- 1. Pregnancies -->
+              <div class="form-group">
+                <label class="form-label" for="assessPregnancies">Pregnancies</label>
+                <div class="input-wrapper">
+                  <input type="number" id="assessPregnancies" class="form-control" value="0" min="0" max="20" required>
+                  <span class="form-unit">count</span>
+                </div>
+                <div class="form-helper">Number of times pregnant (0 for males/nulliparous)</div>
+                <div class="form-error">Please check this value (0–20).</div>
+              </div>
+
+              <!-- 2. Glucose (mg/dL) -->
+              <div class="form-group">
+                <label class="form-label" for="assessGlucose">Glucose (mg/dL) *</label>
+                <div class="input-wrapper">
+                  <input type="number" id="assessGlucose" class="form-control" value="98" min="40" max="400" required>
+                  <span class="form-unit">mg/dL</span>
+                </div>
+                <div class="form-helper">Fasting blood glucose reading</div>
+                <div class="form-error">We couldn't use that value. Enter fasting glucose (40–400 mg/dL).</div>
+              </div>
+
+              <!-- 3. Blood Pressure (mm Hg) -->
+              <div class="form-group">
+                <label class="form-label" for="assessBp">Blood Pressure (mm Hg) *</label>
+                <div class="input-wrapper">
+                  <input type="number" id="assessBp" class="form-control" value="76" min="40" max="160" required>
+                  <span class="form-unit">mm Hg</span>
+                </div>
+                <div class="form-helper">Resting diastolic pressure</div>
+                <div class="form-error">Enter a valid diastolic reading (40–160 mm Hg).</div>
+              </div>
+
+              <!-- 4. Skin Thickness (mm) -->
+              <div class="form-group">
+                <label class="form-label" for="assessSkin">Skin Thickness (mm)</label>
+                <div class="input-wrapper">
+                  <input type="number" id="assessSkin" class="form-control" value="20" min="0" max="99">
+                  <span class="form-unit">mm</span>
+                </div>
+                <div class="form-helper">Triceps skin fold caliper measure (approx. 20 if unsure)</div>
+                <div class="form-error">Please check this measure (0–99 mm).</div>
+              </div>
+
+              <!-- 5. Insulin (µIU/mL) -->
+              <div class="form-group">
+                <label class="form-label" for="assessInsulin">Insulin (µIU/mL)</label>
+                <div class="input-wrapper">
+                  <input type="number" id="assessInsulin" class="form-control" value="85" min="0" max="800">
+                  <span class="form-unit">µIU/mL</span>
+                </div>
+                <div class="form-helper">2-hour serum insulin lab test (approx. 85 if unsure)</div>
+                <div class="form-error">Enter a valid insulin level (0–800 µIU/mL).</div>
+              </div>
+
+              <!-- 6. BMI (kg/m²) -->
+              <div class="form-group">
+                <label class="form-label" for="assessBmi">BMI (kg/m²) *</label>
+                <div class="input-wrapper">
+                  <input type="number" step="0.1" id="assessBmi" class="form-control" value="23.8" min="12" max="65" required>
+                  <span class="form-unit">kg/m²</span>
+                </div>
+                <div class="form-helper">Body Mass Index: weight in kg / (height in meters)²</div>
+                <div class="form-error">Please enter a valid BMI (12.0–65.0 kg/m²).</div>
+              </div>
+
+              <!-- 7. Diabetes Pedigree Function -->
+              <div class="form-group">
+                <label class="form-label" for="assessPedigree">Diabetes Pedigree Function *</label>
+                <div class="input-wrapper">
+                  <input type="number" step="0.01" id="assessPedigree" class="form-control" value="0.45" min="0.05" max="2.50" required>
+                  <span class="form-unit">score</span>
+                </div>
+                <div class="form-helper">Genetic family history estimate (population average ~0.47)</div>
+                <div class="form-error">Enter a score between 0.05 and 2.50.</div>
+              </div>
+
+              <!-- 8. Age (years) -->
+              <div class="form-group">
+                <label class="form-label" for="assessAge">Age (years) *</label>
+                <div class="input-wrapper">
+                  <input type="number" id="assessAge" class="form-control" value="28" min="18" max="100" required>
+                  <span class="form-unit">years</span>
+                </div>
+                <div class="form-helper">Adult completed years</div>
+                <div class="form-error">Enter a valid age (18–100 years).</div>
+              </div>
+
+            </div>
+
+            <!-- Action buttons & ML Model Indicator -->
+            <div style="margin-top: 1.75rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+              <div style="display: flex; align-items: center; gap: 0.65rem;">
+                <span id="assessModelIndicatorBadge" class="status-badge status-attention" style="font-size: 0.76rem;">
+                  <span class="status-indicator-dot" style="background: var(--warning);"></span>
+                  <span id="assessModelIndicatorText">Local Engine (Ready to link ML)</span>
+                </span>
+                <button type="button" data-nav="settings" class="btn btn-subtle btn-sm" style="font-size: 0.76rem; padding: 0.25rem 0.75rem;">
+                  Configure ML Backend &rarr;
+                </button>
+              </div>
+              <div style="display: flex; gap: 0.85rem;">
+                <button type="button" class="btn btn-subtle" id="resetAssessFormBtn">Reset Fields</button>
+                <button type="submit" class="btn btn-primary btn-lg" id="btnRunPrediction">
+                  Check My Risk
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <!-- Right Side: Home Report Upload & Guidance -->
+        <div style="grid-column: span 4; display: flex; flex-direction: column; gap: 1.5rem;">
+          
+          <!-- Home Report Upload Card -->
+          <div class="card">
+            <div class="card-title" style="margin-bottom: 0.5rem;">Have a home health report?</div>
+            <div class="card-subtitle" style="margin-bottom: 1rem;">
+              Upload your lab test (PDF, JPG, or PNG) to extract measurements.
+            </div>
+
+            <div id="uploadDropzone" style="border: 2px dashed var(--border-strong); border-radius: var(--radius-lg); padding: 1.75rem 1rem; text-align: center; cursor: pointer; transition: all var(--transition-base); background: var(--surface-muted);">
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="1.8" style="margin: 0 auto 0.65rem auto;">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>
+                <line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/>
+              </svg>
+              <div style="font-weight: 700; font-size: 0.9rem; color: var(--text-primary);">Click or drag lab report</div>
+              <div style="font-size: 0.76rem; color: var(--text-muted); margin-top: 0.25rem;">Supports PDF, JPG, PNG</div>
+              <div style="font-size: 0.72rem; color: var(--text-secondary); margin-top: 0.65rem; padding: 0.35rem 0.65rem; background: var(--surface); border-radius: var(--radius-full); display: inline-block;">
+                Report processing will be connected to the backend.
+              </div>
+            </div>
+
+            <div id="extractedDataReview" style="display: none; margin-top: 1.25rem; border-top: 1px solid var(--border); padding-top: 1rem;">
+              <div style="font-size: 0.78rem; font-weight: 700; text-transform: uppercase; color: var(--primary); margin-bottom: 0.5rem;">
+                Extracted Values Preview (Simulated)
+              </div>
+              <div style="background: var(--surface-elevated); padding: 0.85rem; border-radius: var(--radius-md); font-size: 0.84rem; display: flex; flex-direction: column; gap: 0.35rem;">
+                <div><strong>Glucose:</strong> 104 mg/dL</div>
+                <div><strong>Diastolic BP:</strong> 78 mm Hg</div>
+                <div><strong>BMI:</strong> 24.1 kg/m²</div>
+              </div>
+              <div style="display: flex; justify-content: flex-end; gap: 0.5rem; margin-top: 0.85rem;">
+                <button type="button" class="btn btn-subtle btn-sm" id="cancelExtractBtn">Cancel</button>
+                <button type="button" class="btn btn-primary btn-sm" id="confirmExtractBtn">Apply Extracted Values</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Calm Guidance Note -->
+          <div class="card">
+            <div class="card-title">How we treat your data</div>
+            <div style="margin-top: 0.85rem; font-size: 0.85rem; color: var(--text-secondary); line-height: 1.55;">
+              <p style="margin-bottom: 0.65rem;">
+                <strong>Local & Private:</strong> Your input data remains strictly confidential in your session context.
+              </p>
+              <p style="margin-bottom: 0.65rem;">
+                <strong>Model-Based:</strong> Evaluates nonlinear associations to give you early preventive awareness.
+              </p>
+              <p>
+                <strong>ML Integration:</strong> Clean API layer ready for continuous backend model updates.
+              </p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- TAB 3: PREDICTION RESULT & SHAP -->
+    <section id="view-result" class="app-tab" style="display: none;">
+      <div class="editorial-grid">
+        
+        <!-- Risk Result Card with Circular Gauge -->
+        <div class="card" style="grid-column: span 12; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 2rem;">
+          <div style="display: flex; align-items: center; gap: 2rem; flex-wrap: wrap;">
+            <!-- Circular Visual Gauge Ring -->
+            <div class="result-gauge-wrap">
+              <svg class="gauge-svg" viewBox="0 0 120 120">
+                <circle class="gauge-circle-bg" cx="60" cy="60" r="54"/>
+                <circle class="gauge-circle-fill" id="resultGaugeCircle" cx="60" cy="60" r="54"/>
+              </svg>
+              <div class="gauge-center-content">
+                <span class="gauge-val-num" id="resultProbabilityVal">18%</span>
+                <span class="gauge-val-label">ESTIMATED</span>
+              </div>
+            </div>
+
+            <div>
+              <div class="card-title">Your Health Assessment</div>
+              <div style="display: flex; align-items: center; gap: 0.75rem; margin-top: 0.4rem;">
+                <span class="status-badge status-healthy" id="resultStatusBadge" style="font-size: 1.1rem; padding: 0.45rem 1.15rem;">
+                  <span class="status-indicator-dot"></span>
+                  <span id="resultCategoryText">Low Risk</span>
+                </span>
+              </div>
+              <p class="card-subtitle" style="margin-top: 0.65rem;">
+                Model Confidence: <strong id="resultConfidenceVal">87%</strong> • Assessed on <span id="resultDateVal">Today</span>
+              </p>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+            <button class="btn btn-secondary" id="returnAssessBtn">New Assessment</button>
+            <button class="btn btn-secondary" id="viewFullReportBtn">Assessment Details</button>
+            <button class="btn btn-primary" id="saveReportBtn">Save to My Reports</button>
+          </div>
+        </div>
+
+        <!-- SHAP Explanation Card -->
+        <div class="card" style="grid-column: span 7;">
+          <div class="card-header">
+            <div>
+              <div class="card-title">What influenced this result?</div>
+              <div class="card-subtitle">The model considers several health factors when generating this estimate.</div>
+            </div>
+            <span class="status-badge status-healthy" id="demoShapBadge" style="font-size: 0.7rem;">Demo explanation</span>
+          </div>
+
+          <p style="font-size: 0.82rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 1rem;">
+            Shapley attributions illustrate how each feature shifted your risk estimate relative to the population baseline:
+          </p>
+
+          <div class="shap-container" id="shapBarsContainer">
+            <!-- Populated dynamically -->
+          </div>
+
+          <div class="shap-legend">
+            <div class="legend-chip">
+              <span class="legend-swatch" style="background: var(--shap-positive);"></span>
+              <span>Positive factor (pushed toward higher risk)</span>
+            </div>
+            <div class="legend-chip">
+              <span class="legend-swatch" style="background: var(--shap-negative);"></span>
+              <span>Negative factor (pushed toward lower risk)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- "What does this mean?" Factor Narrative -->
+        <div class="card" style="grid-column: span 5; display: flex; flex-direction: column; justify-content: space-between;">
+          <div>
+            <div class="card-title">What does this mean?</div>
+            <div class="editorial-statement" id="resultStatementText">
+              “Based on the information entered, the model estimates a relatively lower diabetes risk.”
+            </div>
+            <p class="card-subtitle" style="line-height: 1.55; margin-top: 1rem;" id="resultExtendedText">
+              Fasting glucose (98 mg/dL) and BMI (23.8 kg/m²) were the primary anchoring factors maintaining your low risk category.
+            </p>
+          </div>
+
+          <div style="background: var(--surface-muted); padding: 1.15rem; border-radius: var(--radius-lg); border: 1px solid var(--border); margin-top: 1.5rem;">
+            <div style="font-size: 0.82rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.35rem;">Next Steps</div>
+            <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.45;">
+              Keeping records consistent makes your personal trends easier to understand over time. Share this summary with your doctor at your next routine checkup.
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Result Notice -->
+      <div class="landing-disclaimer" style="margin-top: 1.5rem; margin-bottom: 0;">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+        <p>
+          This result is an automated estimate for academic research and awareness purposes. It should not be interpreted as a clinical diagnosis.
+        </p>
+      </div>
+    </section>
+
+    <!-- TAB 4: REPORT DETAILS VIEW (PRINT-READY) -->
+    <section id="view-report-detail" class="app-tab" style="display: none;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+        <button class="btn btn-subtle" id="backToReportsBtn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+          Back to Reports
+        </button>
+        <div style="display: flex; gap: 0.75rem;">
+          <button class="btn btn-secondary" id="printReportBtn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+            Print Report
+          </button>
+          <button class="btn btn-primary" id="detailNewPredictionBtn">New Assessment</button>
+        </div>
+      </div>
+
+      <div class="card" id="printableReportCard">
+        <!-- Print Header -->
+        <div class="print-only-header">
+          <h2 style="font-size: 1.5rem;">GlucoseSense / DIA-PREDICT</h2>
+          <p style="font-size: 0.85rem; color: #666;">Assessment Details & Factor Explanation Report</p>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 1.25rem; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+          <div>
+            <div class="card-title">Assessment Identifier</div>
+            <div style="font-size: 1.2rem; font-weight: 800; color: var(--text-primary);" id="detailReportId">RPT-2026-0910</div>
+            <div style="font-size: 0.82rem; color: var(--text-muted);" id="detailReportTimestamp">Generated: 10 Sep 2026, 10:30 AM</div>
+          </div>
+          <div>
+            <div class="card-title">Assigned Classification</div>
+            <div style="margin-top: 0.25rem;" id="detailRiskBadgeWrap">
+              <span class="status-badge status-healthy" id="detailRiskBadge">Low Risk</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 1: Assessment Summary -->
+        <div style="margin-bottom: 2rem;">
+          <h3 style="font-size: 1rem; font-weight: 700; margin-bottom: 0.75rem;">1. Assessment Summary</h3>
+          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;">
+            <div style="background: var(--surface-muted); padding: 1rem; border-radius: var(--radius-md);">
+              <div style="font-size: 0.74rem; color: var(--text-muted); text-transform: uppercase;">Estimated Risk</div>
+              <div style="font-size: 1.35rem; font-weight: 800; color: var(--text-primary);" id="detailRiskClassText">Low Risk</div>
+            </div>
+            <div style="background: var(--surface-muted); padding: 1rem; border-radius: var(--radius-md);">
+              <div style="font-size: 0.74rem; color: var(--text-muted); text-transform: uppercase;">Estimated Probability</div>
+              <div style="font-size: 1.35rem; font-weight: 800; color: var(--text-primary);" id="detailRiskProbText">18%</div>
+            </div>
+            <div style="background: var(--surface-muted); padding: 1rem; border-radius: var(--radius-md);">
+              <div style="font-size: 0.74rem; color: var(--text-muted); text-transform: uppercase;">Model Confidence</div>
+              <div style="font-size: 1.35rem; font-weight: 800; color: var(--text-primary);" id="detailConfidenceText">87%</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 2: Health Information -->
+        <div style="margin-bottom: 2rem;">
+          <h3 style="font-size: 1rem; font-weight: 700; margin-bottom: 0.75rem;">2. Health Information</h3>
+          <div class="table-container">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Clinical Parameter</th>
+                  <th>Recorded Value</th>
+                  <th>Standard Reference Benchmark</th>
+                  <th>Observation</th>
+                </tr>
+              </thead>
+              <tbody id="detailMetricsTableBody">
+                <!-- Dynamically populated -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Section 3: Risk Analysis Narrative -->
+        <div style="margin-bottom: 2rem;">
+          <h3 style="font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem;">3. Risk Analysis</h3>
+          <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6;" id="detailNarrativeText">
+            The mathematical model processed your clinical indicators through an Extreme Gradient Boosting (XGBoost) decision tree ensemble. Fasting blood glucose was recorded at 98 mg/dL and Body Mass Index at 23.8 kg/m². Based on the aggregated feature vector, the calculated probability of diabetes is 18%, classifying this evaluation as Low Risk.
+          </p>
+        </div>
+
+        <!-- Section 4: What Influenced This Result -->
+        <div style="margin-bottom: 2rem;">
+          <h3 style="font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem;">4. What Influenced This Result</h3>
+          <div class="shap-container" id="detailShapContainer">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+
+        <!-- Section 5: Model Information -->
+        <div style="margin-bottom: 2rem; border-top: 1px solid var(--border); padding-top: 1.25rem;">
+          <h3 style="font-size: 1rem; font-weight: 700; margin-bottom: 0.35rem;">5. Model Information</h3>
+          <p style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.5;">
+            Pipeline: Baseline exploratory analysis & scaling → Hyperparameter-tuned XGBoost Classifier → TreeSHAP local attributions. Backend interface compatible with Flask/FastAPI REST protocols.
+          </p>
+        </div>
+
+        <!-- Section 6: Formal Disclaimer -->
+        <div style="border-top: 1px solid var(--border); padding-top: 1.25rem; font-size: 0.8rem; color: var(--text-muted); line-height: 1.5;">
+          <strong>6. Disclaimer:</strong> This tool is intended for academic research and health-risk awareness only. It does not provide medical diagnosis, treatment recommendations, or replace professional medical advice.
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 5: MY REPORTS ARCHIVE -->
+    <section id="view-reports" class="app-tab" style="display: none;">
+      <!-- Heading & Filters Toolbar -->
+      <div style="margin-bottom: 1.5rem;">
+        <h2 style="font-size: 1.35rem; font-weight: 800; color: var(--text-primary);">Your Health Reports</h2>
+        <p class="card-subtitle">Review previous assessments and see how your results have changed over time.</p>
+      </div>
+
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+        <div style="display: flex; align-items: center; gap: 0.85rem; flex-wrap: wrap;">
+          <input type="text" id="reportSearchInput" class="form-control" style="width: 240px; border-radius: var(--radius-full);" placeholder="Search reports...">
+          <select id="reportRiskFilter" class="form-control" style="width: 170px; border-radius: var(--radius-full);">
+            <option value="all">All Risk Levels</option>
+            <option value="Low Risk">Low Risk</option>
+            <option value="Moderate Risk">Moderate Risk</option>
+            <option value="High Risk">High Risk</option>
+          </select>
+          <select id="reportSortSelect" class="form-control" style="width: 150px; border-radius: var(--radius-full);">
+            <option value="newest">Newest First</option>
+            <option value="oldest">Oldest First</option>
+          </select>
+        </div>
+        <button class="btn btn-primary" id="reportsNewAssessBtn">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Check My Risk
+        </button>
+      </div>
+
+      <!-- Desktop Table -->
+      <div class="table-container">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Risk</th>
+              <th>Probability</th>
+              <th>Glucose</th>
+              <th>BMI</th>
+              <th style="text-align: right;">Result</th>
+            </tr>
+          </thead>
+          <tbody id="reportsTableBody">
+            <!-- Dynamically populated -->
+          </tbody>
+        </table>
+
+        <!-- Mobile Cards List -->
+        <div class="mobile-cards-list" id="reportsMobileCards">
+          <!-- Dynamically populated -->
+        </div>
+      </div>
+
+      <!-- Empty State View -->
+      <div id="reportsEmptyState" style="display: none; padding: 4rem 1.5rem; text-align: center;">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="1.5" style="margin: 0 auto 1rem auto;">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>
+        </svg>
+        <h3 style="font-size: 1.15rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.25rem;">Nothing here yet.</h3>
+        <p style="font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 1.5rem;">Create a new assessment to begin recording your health history.</p>
+        <button class="btn btn-primary" id="emptyStatePredictBtn">Check My Risk</button>
+      </div>
+    </section>
+
+    <!-- TAB 6: GLUCOSE TRACKING -->
+    <section id="view-glucose" class="app-tab" style="display: none;">
+      <div style="margin-bottom: 1.5rem;">
+        <h2 style="font-size: 1.35rem; font-weight: 800; color: var(--text-primary);">Track Your Glucose</h2>
+        <p class="card-subtitle">Keep track of your blood sugar readings and see how changes impact your numbers.</p>
+      </div>
+
+      <!-- 4 Top Glucose Stats -->
+      <div class="metric-strip" style="margin-bottom: 1.5rem;">
+        <div class="metric-card">
+          <div class="metric-label">Average <span>Rolling</span></div>
+          <div class="metric-number" id="glucoseTrackAvg">102 <small>mg/dL</small></div>
+          <div class="metric-footnote">Across active readings</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">Latest <span>Recent</span></div>
+          <div class="metric-number" id="glucoseTrackLatest">98 <small>mg/dL</small></div>
+          <div class="metric-footnote" id="glucoseTrackLatestTime">Today, 08:30 AM</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">Highest <span>Peak</span></div>
+          <div class="metric-number" id="glucoseTrackHigh">114 <small>mg/dL</small></div>
+          <div class="metric-footnote">Postprandial peak</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">Lowest <span>Trough</span></div>
+          <div class="metric-number" id="glucoseTrackLow">92 <small>mg/dL</small></div>
+          <div class="metric-footnote">Fasting baseline</div>
+        </div>
+      </div>
+
+      <div class="editorial-grid">
+        <!-- Interactive Line Chart -->
+        <div class="card" style="grid-column: span 8;">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Glucose Over Time</div>
+              <div class="card-subtitle">Values from your continuous or home blood glucose log</div>
+            </div>
+            <button class="btn btn-primary btn-sm" id="btnOpenAddGlucoseModal">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              Add Reading
+            </button>
+          </div>
+
+          <div class="chart-box">
+            <svg class="chart-svg" viewBox="0 0 600 180" preserveAspectRatio="none" id="glucoseTrackingSvg">
+              <!-- Dynamically populated -->
+            </svg>
+          </div>
+          <div style="display: flex; justify-content: space-between; margin-top: 0.75rem; padding: 0 0.5rem;" id="glucoseChartLabels">
+            <span class="chart-axis-label">01 Sep</span>
+            <span class="chart-axis-label">04 Sep</span>
+            <span class="chart-axis-label">07 Sep</span>
+            <span class="chart-axis-label">10 Sep</span>
+          </div>
+        </div>
+
+        <!-- Reference Guide -->
+        <div class="card" style="grid-column: span 4;">
+          <div class="card-title">Target Reference Guide</div>
+          <div style="display: flex; flex-direction: column; gap: 0.85rem; margin-top: 1rem; font-size: 0.85rem;">
+            <div style="display: flex; justify-content: space-between; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border);">
+              <span style="color: var(--text-secondary);">Fasting Glucose</span>
+              <strong style="color: var(--primary);">70 – 99 mg/dL</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border);">
+              <span style="color: var(--text-secondary);">Pre-diabetes Range</span>
+              <strong style="color: var(--warning);">100 – 125 mg/dL</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border);">
+              <span style="color: var(--text-secondary);">Elevated Range</span>
+              <strong style="color: var(--danger);">126+ mg/dL</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+              <span style="color: var(--text-secondary);">2h Post-Meal Target</span>
+              <strong>&lt; 140 mg/dL</strong>
+            </div>
+          </div>
+        </div>
+
+        <!-- Readings Log Table -->
+        <div class="card" style="grid-column: span 12; padding: 0; overflow: hidden;">
+          <div style="padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <div class="card-title">Recent Readings</div>
+              <div class="card-subtitle">Chronological record of home glucose checks</div>
+            </div>
+          </div>
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Context</th>
+                <th>Glucose</th>
+                <th>Target Evaluation</th>
+                <th>Optional Note</th>
+                <th style="text-align: right;">Action</th>
+              </tr>
+            </thead>
+            <tbody id="glucoseLogTableBody">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+
+          <!-- Empty Glucose State -->
+          <div id="glucoseEmptyState" style="display: none; padding: 3rem 1.5rem; text-align: center;">
+            <p style="font-size: 1rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 1rem;">No readings yet.</p>
+            <button class="btn btn-primary btn-sm" id="emptyAddGlucoseBtn">Add your first reading</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 7: HEALTH INSIGHTS -->
+    <section id="view-insights" class="app-tab" style="display: none;">
+      <div style="margin-bottom: 1.5rem;">
+        <h2 style="font-size: 1.35rem; font-weight: 800; color: var(--text-primary);">Health Insights</h2>
+        <p class="card-subtitle">What your recent health data shows.</p>
+      </div>
+
+      <div class="editorial-grid">
+        
+        <div class="card" style="grid-column: span 4;">
+          <div class="brand-icon-leaf" style="width: 38px; height: 38px; margin-bottom: 1rem;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 0 1 10 10c0 5.52-4.48 10-10 10S2 17.52 2 12 6.48 2 12 2z"/></svg>
+          </div>
+          <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem;">Glycemic Consistency</h3>
+          <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6;">
+            Your recent glucose readings have been relatively consistent. Pairing whole carbohydrates with dietary fiber helps buffer sudden post-meal surges.
+          </p>
+        </div>
+
+        <div class="card" style="grid-column: span 4;">
+          <div class="brand-icon-leaf" style="width: 38px; height: 38px; margin-bottom: 1rem; background: var(--secondary);">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 14 14"/></svg>
+          </div>
+          <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem;">Favorable Trajectory</h3>
+          <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6;">
+            Your latest assessment is lower than your previous assessment. Sustained physical activity and balanced hydration reflect positively in your numbers.
+          </p>
+        </div>
+
+        <div class="card" style="grid-column: span 4;">
+          <div class="brand-icon-leaf" style="width: 38px; height: 38px; margin-bottom: 1rem; background: #059669;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          </div>
+          <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem;">Routine Tracking</h3>
+          <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6;">
+            Keeping your records consistent can make your personal trends easier to understand and support discussions with your healthcare provider.
+          </p>
+        </div>
+
+        <div class="card" style="grid-column: span 6;">
+          <div class="card-title">Transparent AI in Preventive Health</div>
+          <h3 style="font-size: 1.05rem; font-weight: 700; margin: 0.5rem 0;">Why Feature Explanations Matter</h3>
+          <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6;">
+            Rather than relying on a black-box probability, GlucoseSense uses additive feature values to explain which indicators contributed positively or negatively. This provides clarity rather than mystery.
+          </p>
+        </div>
+
+        <div class="card" style="grid-column: span 6;">
+          <div class="card-title">General Health Observations</div>
+          <h3 style="font-size: 1.05rem; font-weight: 700; margin: 0.5rem 0;">Daily Habits for Glycemic Balance</h3>
+          <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.65rem; font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.5rem;">
+            <li style="display: flex; align-items: center; gap: 0.5rem;">
+              <span style="color: var(--primary); font-weight: 700;">✓</span> A brisk 10 to 15-minute walk after meals supports natural glucose uptake.
+            </li>
+            <li style="display: flex; align-items: center; gap: 0.5rem;">
+              <span style="color: var(--primary); font-weight: 700;">✓</span> Adequate sleep helps preserve cellular insulin sensitivity.
+            </li>
+            <li style="display: flex; align-items: center; gap: 0.5rem;">
+              <span style="color: var(--primary); font-weight: 700;">✓</span> Hydrating regularly helps your kidneys filter excess circulating sugar.
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- TAB 8: USER PROFILE -->
+    <section id="view-profile" class="app-tab" style="display: none;">
+      <div class="editorial-grid">
+        
+        <!-- Personal Information Form -->
+        <div class="card" style="grid-column: span 7;">
+          <div class="card-title" style="margin-bottom: 1.25rem;">Personal Information</div>
+          
+          <div style="display: flex; align-items: center; gap: 1.25rem; margin-bottom: 1.75rem;">
+            <div class="user-avatar-circle" id="profileAvatarBig" style="width: 58px; height: 58px; font-size: 1.4rem;">A</div>
+            <div>
+              <button class="btn btn-secondary btn-sm" id="changePhotoBtn">Change Avatar</button>
+              <div style="font-size: 0.76rem; color: var(--text-muted); margin-top: 0.35rem;">General healthcare user profile</div>
+            </div>
+          </div>
+
+          <form id="profileForm">
+            <div class="form-group">
+              <label class="form-label" for="profileFullName">Full Name</label>
+              <input type="text" class="form-control" id="profileFullName" value="Ayush Sharma" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="profileEmail">Email Address</label>
+              <input type="email" class="form-control" id="profileEmail" value="ayush.sharma@example.com" required>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+              <div class="form-group">
+                <label class="form-label" for="profileAge">Age (Years)</label>
+                <input type="number" class="form-control" id="profileAge" value="28" min="18" max="100">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="profileGender">Biological Sex</label>
+                <select class="form-control" id="profileGender">
+                  <option value="Male" selected>Male</option>
+                  <option value="Female">Female</option>
+                  <option value="Other">Other / Prefer not to specify</option>
+                </select>
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="margin-top: 0.5rem;">Save Changes</button>
+          </form>
+        </div>
+
+        <!-- Account Security -->
+        <div class="card" style="grid-column: span 5;">
+          <div class="card-title" style="margin-bottom: 1.25rem;">Account Security</div>
+          
+          <form id="passwordChangeForm">
+            <div class="form-group">
+              <label class="form-label" for="currPass">Current Password</label>
+              <input type="password" class="form-control" id="currPass" placeholder="••••••••">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="newPass">New Password</label>
+              <input type="password" class="form-control" id="newPass" placeholder="••••••••">
+            </div>
+            <button type="submit" class="btn btn-secondary btn-sm">Update Password</button>
+          </form>
+
+          <div style="border-top: 1px solid var(--border); padding-top: 1.25rem; margin-top: 1.75rem;">
+            <div class="card-title" style="margin-bottom: 0.5rem;">Privacy Notice</div>
+            <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.5;">
+              You are signed in as a general user. Your personal parameters and predictions stay private in your local browser session.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- TAB 9: SETTINGS -->
+    <section id="view-settings" class="app-tab" style="display: none;">
+      <div class="editorial-grid">
+        
+        <div class="card" style="grid-column: span 7;">
+          <div class="card-title" style="margin-bottom: 1.25rem;">Application Preferences</div>
+
+          <div class="toggle-row">
+            <div>
+              <div style="font-weight: 700; font-size: 0.9rem; color: var(--text-primary);">Dark Theme</div>
+              <div style="font-size: 0.78rem; color: var(--text-muted);">Switch to calm medical dark mode (#101817).</div>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" id="settingsDarkToggle">
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+
+          <div class="toggle-row">
+            <div>
+              <div style="font-weight: 700; font-size: 0.9rem; color: var(--text-primary);">Email Notifications</div>
+              <div style="font-size: 0.78rem; color: var(--text-muted);">Receive summary digests of newly saved assessments.</div>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" id="settingsEmailToggle" checked>
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+
+          <div class="toggle-row">
+            <div>
+              <div style="font-weight: 700; font-size: 0.9rem; color: var(--text-primary);">Report Reminders</div>
+              <div style="font-size: 0.78rem; color: var(--text-muted);">Prompt scheduled checkups every 30 days.</div>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" id="settingsReminderToggle" checked>
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+
+          <div class="toggle-row">
+            <div>
+              <div style="font-weight: 700; font-size: 0.9rem; color: var(--text-primary);">Health Insights</div>
+              <div style="font-size: 0.78rem; color: var(--text-muted);">Show contextual lifestyle observations alongside results.</div>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" id="settingsInsightsToggle" checked>
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+        </div>
+
+        <div class="card" style="grid-column: span 5;">
+          <div class="card-title" style="margin-bottom: 1.25rem;">Data & Privacy</div>
+          
+          <div style="margin-bottom: 1.5rem;">
+            <div style="font-weight: 700; font-size: 0.88rem; color: var(--text-primary); margin-bottom: 0.25rem;">Export Health Records</div>
+            <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.75rem;">Download all saved assessments and glucose entries as JSON format.</p>
+            <button class="btn btn-secondary btn-sm" id="exportDataBtn">Export Records (JSON)</button>
+          </div>
+
+          <div style="border-top: 1px solid var(--border); padding-top: 1.25rem; margin-bottom: 1.5rem;">
+            <div style="font-weight: 700; font-size: 0.88rem; color: var(--text-primary); margin-bottom: 0.25rem;">Reset Local History</div>
+            <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.75rem;">Clear saved reports and restore initial baseline.</p>
+            <button class="btn btn-secondary btn-sm" id="purgeLocalDataBtn" style="color: var(--status-elevated);">Reset Local History</button>
+          </div>
+
+          <div style="border-top: 1px solid var(--border); padding-top: 1.25rem;">
+            <div style="font-weight: 700; font-size: 0.88rem; color: var(--status-elevated); margin-bottom: 0.25rem;">Delete Account</div>
+            <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.75rem;">Permanently wipe user session and credentials.</p>
+            <button class="btn btn-danger btn-sm" id="deleteAccountBtn">Delete Account</button>
+          </div>
+        </div>
+
+        <!-- Trained ML Model Integration & Backend Linking -->
+        <div class="card" style="grid-column: span 12; margin-top: 0.25rem;" id="mlIntegrationCard">
+          <div class="card-header" style="align-items: center; flex-wrap: wrap; gap: 1rem;">
+            <div>
+              <div class="card-title" style="display: flex; align-items: center; gap: 0.55rem;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                Trained ML Model Connection (DIA-PREDICT Service)
+              </div>
+              <div class="card-subtitle">
+                Link your custom trained Python ML model (Flask, FastAPI, Scikit-learn, XGBoost) or run in local clinical simulation.
+              </div>
+            </div>
+            <span id="mlStatusBadge" class="status-badge status-attention" style="font-size: 0.78rem;">
+              <span class="status-indicator-dot" style="background: var(--warning);"></span>
+              <span id="mlStatusText">Local Calibrated Engine (Ready to link)</span>
+            </span>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1.25fr 1fr; gap: 1.75rem; margin-top: 1rem; align-items: start;">
+            <!-- Configuration Inputs -->
+            <div>
+              <div class="form-group">
+                <label class="form-label" for="mlBackendUrlInput">Python Backend Prediction URL</label>
+                <input type="url" id="mlBackendUrlInput" class="form-control" value="http://127.0.0.1:5000/api/predict" placeholder="http://127.0.0.1:5000/api/predict">
+                <div class="form-helper">HTTP endpoint of your ML backend server (Flask / FastAPI).</div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="mlModeSelect">Model Execution Mode</label>
+                <select id="mlModeSelect" class="form-control">
+                  <option value="auto" selected>Auto-Detect (Try ML Backend &rarr; Smooth Fallback to Local Engine)</option>
+                  <option value="backend_only">Strict Backend (Require Live Python ML Server)</option>
+                  <option value="simulation">Local Simulation Only (Calibrated Clinical Benchmark)</option>
+                </select>
+                <div class="form-helper">Auto-Detect links to your model the instant your Python server is started!</div>
+              </div>
+
+              <div style="display: flex; gap: 0.75rem; margin-top: 1.25rem;">
+                <button type="button" class="btn btn-secondary btn-sm" id="btnTestMlBackend">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                  Test Connection
+                </button>
+                <button type="button" class="btn btn-primary btn-sm" id="btnSaveMlConfig">
+                  Save Endpoint
+                </button>
+              </div>
+            </div>
+
+            <!-- Linked Dataset & Model Info Box -->
+            <div style="background: var(--surface-muted); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.25rem;">
+              <div style="font-weight: 700; font-size: 0.86rem; color: var(--text-primary); margin-bottom: 0.65rem; display: flex; align-items: center; gap: 0.5rem;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                Linked to <code>eda-dataset-database .ipynb</code>
+              </div>
+              <ul style="margin-left: 1.15rem; font-size: 0.78rem; color: var(--text-secondary); line-height: 1.6; display: flex; flex-direction: column; gap: 0.35rem;">
+                <li><strong>Dataset:</strong> Pima Indians Diabetes Database (768 records, 8 clinical features).</li>
+                <li><strong>Model Architecture:</strong> <code>SimpleImputer(median) &rarr; StandardScaler &rarr; SVC(rbf, prob=True)</code> from Cell 71.</li>
+                <li><strong>Trained Accuracy:</strong> 74.03% test accuracy (Cell 70 benchmark).</li>
+                <li><strong>Active Artifact:</strong> <code>diabetes_model.pkl</code> loaded in <code>ml_backend.py</code>.</li>
+              </ul>
+              <div style="margin-top: 0.75rem; font-size: 0.74rem; color: var(--text-muted); border-top: 1px dashed var(--border); padding-top: 0.65rem;">
+                To retrain anytime: run <code style="background: var(--surface); padding: 0.1rem 0.3rem; border-radius: 4px; color: var(--primary); font-weight: 700;">python train_from_notebook.py</code>.
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- MOBILE NAVIGATION DOCK (VISIBLE <= 900px) -->
+  <nav class="mobile-nav" aria-label="Mobile Navigation">
+    <button class="mobile-nav-item active" data-nav="overview">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+      Home
+    </button>
+    <button class="mobile-nav-item" data-nav="assess">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      Predict
+    </button>
+    <button class="mobile-nav-item" data-nav="reports">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg>
+      Reports
+    </button>
+    <button class="mobile-nav-item" data-nav="insights">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+      Insights
+    </button>
+    <button class="mobile-nav-item" data-nav="profile">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      Profile
+    </button>
+  </nav>
+
+</div>
+
+<!-- ========================================================================
+     MODALS & OVERLAYS
+     ======================================================================== -->
+
+<!-- 1. LOGIN MODAL -->
+<div class="modal-backdrop" id="loginModal">
+  <div class="modal-dialog">
+    <div class="modal-header">
+      <div>
+        <div class="brand-badge" style="margin-bottom: 0.5rem;">
+          <div class="brand-icon-leaf" style="width: 28px; height: 28px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+          </div>
+          <span class="brand-name" style="font-size: 1.05rem;">GlucoseSense</span>
+        </div>
+        <h2 style="font-size: 1.35rem; font-weight: 800; color: var(--text-primary);">Welcome back.</h2>
+        <div class="card-subtitle">Continue your health journey.</div>
+      </div>
+      <button class="close-modal-btn" id="closeLoginModalBtn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+
+    <form id="loginForm">
+      <div class="form-group">
+        <label class="form-label" for="loginEmail">Email</label>
+        <input type="email" id="loginEmail" class="form-control" placeholder="you@example.com" value="ayush.sharma@example.com" required>
+      </div>
+
+      <div class="form-group">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.35rem;">
+          <label class="form-label" for="loginPassword" style="margin-bottom: 0;">Password</label>
+          <button type="button" class="btn-subtle" id="loginForgotPasswordLink" style="font-size: 0.78rem; color: var(--primary);">Forgot password?</button>
+        </div>
+        <input type="password" id="loginPassword" class="form-control" placeholder="Enter your password" value="password123" required>
+      </div>
+
+      <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.25rem;">
+        <input type="checkbox" id="loginRememberMe" checked>
+        <label for="loginRememberMe" style="font-size: 0.84rem; color: var(--text-secondary); cursor: pointer;">Remember me</label>
+      </div>
+
+      <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.75rem;">Login</button>
+    </form>
+
+    <div class="sso-divider">or continue with</div>
+
+    <div class="sso-btn-group">
+      <button type="button" class="sso-btn" id="ssoGoogleBtn">
+        <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>
+        Continue with Google
+      </button>
+      <button type="button" class="sso-btn" id="ssoMicrosoftBtn">
+        <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#F25022" d="M1 1h10v10H1z"/><path fill="#00A4EF" d="M1 13h10v10H1z"/><path fill="#7FBA00" d="M13 1h10v10H13z"/><path fill="#FFB900" d="M13 13h10v10H13z"/></svg>
+        Continue with Microsoft
+      </button>
+    </div>
+
+    <div style="text-align: center; margin-top: 1rem; font-size: 0.84rem; color: var(--text-secondary);">
+      Don't have an account? <button type="button" id="switchToSignupBtn" style="color: var(--primary); font-weight: 700;">Sign up</button>
+    </div>
+  </div>
+</div>
+
+<!-- 2. SIGN UP MODAL -->
+<div class="modal-backdrop" id="signupModal">
+  <div class="modal-dialog">
+    <div class="modal-header">
+      <div>
+        <div class="brand-badge" style="margin-bottom: 0.5rem;">
+          <div class="brand-icon-leaf" style="width: 28px; height: 28px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+          </div>
+          <span class="brand-name" style="font-size: 1.05rem;">GlucoseSense</span>
+        </div>
+        <h2 style="font-size: 1.35rem; font-weight: 800; color: var(--text-primary);">Create Your Account</h2>
+        <div class="card-subtitle">Take the first step toward proactive health awareness.</div>
+      </div>
+      <button class="close-modal-btn" id="closeSignupModalBtn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+
+    <form id="signupForm">
+      <div class="form-group">
+        <label class="form-label" for="signupName">Full Name</label>
+        <input type="text" id="signupName" class="form-control" placeholder="e.g. Ayush Sharma" required>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="signupEmail">Email</label>
+        <input type="email" id="signupEmail" class="form-control" placeholder="you@example.com" required>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="signupPassword">Password</label>
+        <input type="password" id="signupPassword" class="form-control" placeholder="Create a password" required minlength="6">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="signupConfirmPassword">Confirm Password</label>
+        <input type="password" id="signupConfirmPassword" class="form-control" placeholder="Confirm your password" required minlength="6">
+      </div>
+
+      <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.75rem;">Complete Registration</button>
+    </form>
+
+    <div style="text-align: center; margin-top: 1.25rem; font-size: 0.84rem; color: var(--text-secondary);">
+      Already have an account? <button type="button" id="switchToLoginBtn" style="color: var(--primary); font-weight: 700;">Login</button>
+    </div>
+  </div>
+</div>
+
+<!-- 3. FORGOT PASSWORD MODAL -->
+<div class="modal-backdrop" id="forgotPasswordModal">
+  <div class="modal-dialog">
+    <div class="modal-header">
+      <div>
+        <h2 style="font-size: 1.25rem; font-weight: 800; color: var(--text-primary);">Reset Password</h2>
+        <div class="card-subtitle">Enter your registered email to receive recovery instructions.</div>
+      </div>
+      <button class="close-modal-btn" id="closeForgotModalBtn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+
+    <form id="forgotPasswordForm">
+      <div class="form-group">
+        <label class="form-label" for="forgotEmail">Email</label>
+        <input type="email" id="forgotEmail" class="form-control" placeholder="you@example.com" required>
+      </div>
+      <div style="display: flex; justify-content: flex-end; gap: 0.75rem; margin-top: 1.5rem;">
+        <button type="button" class="btn btn-subtle" id="cancelForgotBtn">Back to Login</button>
+        <button type="submit" class="btn btn-primary">Send Reset Instructions</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- 4. ONBOARDING MODAL (3 STEPS) -->
+<div class="modal-backdrop" id="onboardingModal">
+  <div class="modal-dialog" style="max-width: 560px;">
+    
+    <!-- Step Tracker (1 ━━━ 2 ━━━ 3) -->
+    <div class="onboarding-steps-track">
+      <div class="onboarding-steps-line"></div>
+      <div class="onboarding-step-indicator active" id="stepIndicator1">
+        <div class="step-num-bubble">1</div>
+        <span style="font-size: 0.74rem; font-weight: 700;">About You</span>
+      </div>
+      <div class="onboarding-step-indicator" id="stepIndicator2">
+        <div class="step-num-bubble">2</div>
+        <span style="font-size: 0.74rem; font-weight: 700;">Health Information</span>
+      </div>
+      <div class="onboarding-step-indicator" id="stepIndicator3">
+        <div class="step-num-bubble">3</div>
+        <span style="font-size: 0.74rem; font-weight: 700;">Preferences</span>
+      </div>
+    </div>
+
+    <!-- Step 1 View -->
+    <div id="onboardingStep1">
+      <h3 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 0.35rem;">Step 1: About You</h3>
+      <p class="card-subtitle" style="margin-bottom: 1.25rem;">Tell us a little about yourself to personalize your baseline values.</p>
+
+      <div class="form-group">
+        <label class="form-label" for="obName">Full Name</label>
+        <input type="text" class="form-control" id="obName" value="Ayush Sharma">
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+        <div class="form-group">
+          <label class="form-label" for="obAge">Age</label>
+          <input type="number" class="form-control" id="obAge" value="28" min="18" max="100">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="obGender">Gender</label>
+          <select class="form-control" id="obGender">
+            <option value="Male" selected>Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+      </div>
+
+      <div style="display: flex; justify-content: flex-end; margin-top: 1.5rem;">
+        <button type="button" class="btn btn-primary" id="obNextBtn1">Continue to Health Information →</button>
+      </div>
+    </div>
+
+    <!-- Step 2 View -->
+    <div id="onboardingStep2" style="display: none;">
+      <h3 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 0.35rem;">Step 2: Health Information</h3>
+      <p class="card-subtitle" style="margin-bottom: 1.25rem;">Approximate measures for initial clinical reference corridors.</p>
+
+      <div class="form-group">
+        <label class="form-label" for="obGlucose">Estimated Fasting Glucose (mg/dL)</label>
+        <div class="input-wrapper">
+          <input type="number" class="form-control" id="obGlucose" value="98" min="40" max="300">
+          <span class="form-unit">mg/dL</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="obBmi">Estimated Body Mass Index (BMI)</label>
+        <div class="input-wrapper">
+          <input type="number" step="0.1" class="form-control" id="obBmi" value="23.8" min="12" max="60">
+          <span class="form-unit">kg/m²</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="obFamily">Family History of Diabetes</label>
+        <select class="form-control" id="obFamily">
+          <option value="none">No immediate family history</option>
+          <option value="one_parent" selected>One parent or relative</option>
+          <option value="both_parents">Immediate family history</option>
+        </select>
+      </div>
+
+      <div style="display: flex; justify-content: space-between; margin-top: 1.5rem;">
+        <button type="button" class="btn btn-subtle" id="obBackBtn2">← Back</button>
+        <button type="button" class="btn btn-primary" id="obNextBtn2">Continue to Preferences →</button>
+      </div>
+    </div>
+
+    <!-- Step 3 View -->
+    <div id="onboardingStep3" style="display: none;">
+      <h3 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 0.35rem;">Step 3: Preferences</h3>
+      <p class="card-subtitle" style="margin-bottom: 1.25rem;">Choose your notification and tracking defaults.</p>
+
+      <div class="toggle-row">
+        <div>
+          <div style="font-weight: 700; font-size: 0.88rem;">Monthly Checkup Reminders</div>
+          <div style="font-size: 0.76rem; color: var(--text-muted);">Send gentle reminders to check fasting glucose monthly.</div>
+        </div>
+        <label class="toggle-switch">
+          <input type="checkbox" id="obCheckupToggle" checked>
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+
+      <div class="toggle-row">
+        <div>
+          <div style="font-weight: 700; font-size: 0.88rem;">Model Explanations</div>
+          <div style="font-size: 0.76rem; color: var(--text-muted);">Show what influenced your assessment result.</div>
+        </div>
+        <label class="toggle-switch">
+          <input type="checkbox" id="obShapToggle" checked>
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+
+      <div style="display: flex; justify-content: space-between; margin-top: 2rem;">
+        <button type="button" class="btn btn-subtle" id="obBackBtn3">← Back</button>
+        <button type="button" class="btn btn-primary" id="obFinishBtn">Enter My Dashboard →</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- 5. MULTI-STAGE PREDICTION LOADER MODAL -->
+<div class="predict-loader-modal" id="predictLoaderModal">
+  <div class="predict-loader-card">
+    <div class="spinner-wrap">
+      <div class="spinner-ring"></div>
+    </div>
+    <h3 style="font-size: 1.25rem; font-weight: 800; color: var(--text-primary);" id="predictLoaderTitle">Evaluating Your Health Data</h3>
+    <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.25rem;" id="predictLoaderSub">Running assessment pipeline...</p>
+
+    <div class="predict-steps-list">
+      <div class="predict-step-row active" id="pStep1">
+        <span class="step-check-circle">1</span>
+        <span>Checking your information...</span>
+      </div>
+      <div class="predict-step-row" id="pStep2">
+        <span class="step-check-circle">2</span>
+        <span>Preparing your assessment...</span>
+      </div>
+      <div class="predict-step-row" id="pStep3">
+        <span class="step-check-circle">3</span>
+        <span>Running the model...</span>
+      </div>
+      <div class="predict-step-row" id="pStep4">
+        <span class="step-check-circle">4</span>
+        <span>Preparing your explanation...</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 6. QUICK RECORD GLUCOSE MODAL -->
+<div class="modal-backdrop" id="recordGlucoseModal">
+  <div class="modal-dialog">
+    <div class="modal-header">
+      <div>
+        <h2 style="font-size: 1.25rem; font-weight: 800; color: var(--text-primary);">Add Glucose Reading</h2>
+        <div class="card-subtitle">Input reading from your home blood sugar monitor.</div>
+      </div>
+      <button class="close-modal-btn" id="closeGlucoseModalBtn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+
+    <form id="quickGlucoseForm">
+      <div class="form-group">
+        <label class="form-label" for="quickGlucoseVal">Glucose Level</label>
+        <div class="input-wrapper">
+          <input type="number" id="quickGlucoseVal" class="form-control" style="font-size: 1.4rem; padding: 0.85rem;" placeholder="98" required min="40" max="400">
+          <span class="form-unit" style="font-size: 1rem; font-weight: 600;">mg/dL</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="quickGlucoseContext">Measurement Context</label>
+        <select id="quickGlucoseContext" class="form-control">
+          <option value="Fasting">Fasting (Morning before meal)</option>
+          <option value="Before meal">Before meal</option>
+          <option value="After meal">After meal (2 hrs post-meal)</option>
+          <option value="Bedtime">Bedtime</option>
+          <option value="Random">Random check</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="quickGlucoseNote">Optional Note</label>
+        <input type="text" id="quickGlucoseNote" class="form-control" placeholder="e.g. Post 20-min evening walk">
+      </div>
+
+      <div style="display: flex; justify-content: flex-end; gap: 0.75rem; margin-top: 1.5rem;">
+        <button type="button" class="btn btn-subtle" id="cancelGlucoseModalBtn">Cancel</button>
+        <button type="submit" class="btn btn-primary">Save Reading</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- 7. TOAST NOTIFICATION -->
+<div class="toast" id="appToast">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+  <span id="toastMessage">You're all set. Your assessment is ready.</span>
+</div>
+
+<!-- Scripts -->
+<script src="app.js"></script>
+</body>
+</html>
