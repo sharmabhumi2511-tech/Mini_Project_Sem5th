@@ -4,11 +4,11 @@
  */
 
 const DEFAULT_USER = {
-  name: 'Ayush Sharma',
-  email: 'ayush.sharma@example.com',
+  name: 'Guest User',
+  email: 'guest@example.com',
   age: 28,
   gender: 'Male',
-  avatarLetter: 'A',
+  avatarLetter: 'G',
   avatarBg: '#059669'
 };
 

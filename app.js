@@ -1,8 +1,3 @@
-/**
- * GlucoseSense / DIA-PREDICT — Application Controller (Production Standard)
- * Industrial Healthcare Decision Support System for Type 2 Diabetes Stratification
- */
-
 // ============================================================================
 // 1. ENVIRONMENT & CONFIGURATION
 // ============================================================================
@@ -27,18 +22,21 @@ const ML_CONFIG = {
 // ============================================================================
 // 2. CENTRAL APPLICATION STATE & LOCAL PERSISTENCE
 // ============================================================================
+const DEFAULT_GUEST_USER = {
+  name: 'Guest User',
+  email: 'guest@example.com',
+  age: 28,
+  gender: 'Male',
+  avatarLetter: 'G',
+  avatarBg: '#059669'
+};
+
 const AppState = {
   theme: localStorage.getItem('diapredict_theme') || 'light',
+  lang: localStorage.getItem('diapredict_lang') || 'en',
   authenticated: true,
   currentView: 'overview',
-  user: {
-    name: 'Ayush Sharma',
-    email: 'ayush.sharma@example.com',
-    age: 28,
-    gender: 'Male',
-    avatarLetter: 'A',
-    avatarBg: '#059669'
-  },
+  user: { ...DEFAULT_GUEST_USER },
   latestAssessment: null,
   activeDetailReport: null,
   reports: [
@@ -128,16 +126,124 @@ const AppState = {
   }
 };
 
+// User & Multi-Account Management Helpers
+function getRegisteredAccounts() {
+  try {
+    const data = localStorage.getItem('diapredict_accounts');
+    const list = data ? JSON.parse(data) : [];
+    return list.filter(a => a && a.email && a.email !== 'ayush.sharma@example.com' && a.name !== 'Ayush Sharma');
+  } catch (e) {
+    return [];
+  }
+}
+
+function saveRegisteredAccount(acc) {
+  try {
+    if (!acc || !acc.email || acc.email === 'guest@example.com' || acc.email === 'ayush.sharma@example.com') return;
+    const accounts = getRegisteredAccounts();
+    const idx = accounts.findIndex(a => a.email.toLowerCase() === acc.email.toLowerCase());
+    if (idx >= 0) {
+      accounts[idx] = { ...accounts[idx], ...acc };
+    } else {
+      accounts.push(acc);
+    }
+    localStorage.setItem('diapredict_accounts', JSON.stringify(accounts));
+  } catch (e) {
+    console.warn('Failed to save account:', e);
+  }
+}
+
+function findRegisteredAccount(email) {
+  if (!email) return null;
+  const accounts = getRegisteredAccounts();
+  return accounts.find(a => a.email.toLowerCase() === email.toLowerCase());
+}
+
+function deriveNameFromEmail(email) {
+  if (!email) return 'User';
+  const prefix = email.split('@')[0] || 'User';
+  const parts = prefix.split(/[._-]+/);
+  return parts.map(p => p.charAt(0).toUpperCase() + p.slice(1).toLowerCase()).join(' ') || 'User';
+}
+
+function getUserDataKey(email, prefix) {
+  if (!email || email === 'guest@example.com') return prefix;
+  const safe = email.toLowerCase().replace(/[^a-z0-9]/g, '_');
+  return `${prefix}_${safe}`;
+}
+
+function loadUserReports(email) {
+  try {
+    const key = getUserDataKey(email, 'diapredict_reports');
+    const data = localStorage.getItem(key);
+    if (data) return JSON.parse(data);
+    if (!email || email === 'guest@example.com') {
+      const global = localStorage.getItem('diapredict_reports');
+      if (global) return JSON.parse(global);
+      return AppState.reports;
+    }
+    return [];
+  } catch (e) {
+    return [];
+  }
+}
+
+function saveUserReports(email, reports) {
+  try {
+    const key = getUserDataKey(email, 'diapredict_reports');
+    localStorage.setItem(key, JSON.stringify(reports));
+    localStorage.setItem('diapredict_reports', JSON.stringify(reports));
+  } catch (e) {
+    console.warn('Failed to save reports:', e);
+  }
+}
+
+function loadUserGlucose(email) {
+  try {
+    const key = getUserDataKey(email, 'diapredict_glucose');
+    const data = localStorage.getItem(key);
+    if (data) return JSON.parse(data);
+    if (!email || email === 'guest@example.com') {
+      const global = localStorage.getItem('diapredict_glucose');
+      if (global) return JSON.parse(global);
+      return AppState.glucoseReadings;
+    }
+    return [];
+  } catch (e) {
+    return [];
+  }
+}
+
+function saveUserGlucose(email, glucoseList) {
+  try {
+    const key = getUserDataKey(email, 'diapredict_glucose');
+    localStorage.setItem(key, JSON.stringify(glucoseList));
+    localStorage.setItem('diapredict_glucose', JSON.stringify(glucoseList));
+  } catch (e) {
+    console.warn('Failed to save glucose:', e);
+  }
+}
+
 // Hydrate from LocalStorage
 try {
-  const savedReports = localStorage.getItem('diapredict_reports');
-  if (savedReports) AppState.reports = JSON.parse(savedReports);
-
-  const savedGlucose = localStorage.getItem('diapredict_glucose');
-  if (savedGlucose) AppState.glucoseReadings = JSON.parse(savedGlucose);
-
   const savedUser = localStorage.getItem('diapredict_user');
-  if (savedUser) AppState.user = { ...AppState.user, ...JSON.parse(savedUser) };
+  if (savedUser) {
+    const parsed = JSON.parse(savedUser);
+    if (parsed && (parsed.email === 'ayush.sharma@example.com' || parsed.name === 'Ayush Sharma')) {
+      localStorage.removeItem('diapredict_user');
+      AppState.user = { ...DEFAULT_GUEST_USER };
+    } else if (parsed && parsed.name) {
+      AppState.user = { ...DEFAULT_GUEST_USER, ...parsed };
+      AppState.reports = loadUserReports(AppState.user.email);
+      AppState.glucoseReadings = loadUserGlucose(AppState.user.email);
+    }
+  } else {
+    const savedReports = localStorage.getItem('diapredict_reports');
+    if (savedReports) AppState.reports = JSON.parse(savedReports);
+
+    const savedGlucose = localStorage.getItem('diapredict_glucose');
+    if (savedGlucose) AppState.glucoseReadings = JSON.parse(savedGlucose);
+  }
 } catch (e) {
   console.warn('LocalStorage hydration notice:', e);
 }
@@ -145,6 +251,9 @@ try {
 if (AppState.reports.length > 0) {
   AppState.latestAssessment = AppState.reports[0];
   AppState.activeDetailReport = AppState.reports[0];
+} else {
+  AppState.latestAssessment = null;
+  AppState.activeDetailReport = null;
 }
 
 // ============================================================================
@@ -384,10 +493,421 @@ if (typeof window !== 'undefined') {
 }
 
 // ============================================================================
+// 3.5. INTERNATIONALIZATION & LOCALIZATION (HINDI / ENGLISH)
+// ============================================================================
+const I18N = {
+  en: {
+    nav_home: "Home",
+    nav_features: "Features",
+    nav_how_it_works: "How It Works",
+    nav_about: "About",
+    nav_resources: "Resources",
+    nav_contact: "Contact",
+    nav_login: "Login",
+    nav_signup: "Sign Up",
+    nav_dashboard: "Dashboard",
+    hero_eyebrow: "<span>PREVENT</span> • <span>TRACK</span> • <span>UNDERSTAND</span> • <span>STAY HEALTHIER</span>",
+    hero_title: "Early Awareness<br><span class=\"text-highlight\">For A Healthier You</span>",
+    hero_desc: "Understand your diabetes risk with a simple, data-driven health assessment. GlucoseSense helps you make sense of your health information so you can take informed next steps.",
+    hero_get_started: "Get Started →",
+    hero_learn_more: "Learn More",
+    hero_badge_research: "Research Based",
+    hero_badge_easy: "Easy To Use",
+    hero_badge_privacy: "Your Data Stays Private",
+
+    sidebar_overview: "Dashboard",
+    sidebar_assess: "Check My Risk",
+    sidebar_reports: "My Reports",
+    sidebar_glucose: "Track Glucose",
+    sidebar_insights: "Health Insights",
+    sidebar_profile: "Profile",
+    sidebar_settings: "Settings",
+    sidebar_add_glucose: "Add Glucose Reading",
+    sidebar_logout: "Logout",
+    sidebar_lang_label: "Language: English",
+
+    tab_overview_title: "Dashboard",
+    tab_overview_sub: "Here's a quick look at your recent health activity.",
+    tab_assess_title: "Check Your Diabetes Risk",
+    tab_assess_sub: "Enter your latest health information to generate an estimated risk assessment.",
+    tab_result_title: "Your Health Assessment",
+    tab_result_sub: "Machine learning probability and Explainable AI (SHAP) attributions.",
+    tab_detail_title: "Assessment Details",
+    tab_detail_sub: "Comprehensive clinical biomarker breakdown and metrics.",
+    tab_reports_title: "Your Health Reports",
+    tab_reports_sub: "Review previous assessments and historical risk trajectories.",
+    tab_glucose_title: "Track Your Glucose",
+    tab_glucose_sub: "Blood sugar log and target range trend analysis.",
+    tab_insights_title: "Health Insights",
+    tab_insights_sub: "Evidence-based clinical guidelines and prevention strategies.",
+    tab_profile_title: "Profile",
+    tab_profile_sub: "Manage personal details and biometric baselines.",
+    tab_settings_title: "Settings",
+    tab_settings_sub: "API connection parameters, visual theme, and health data export.",
+
+    dash_total_assessments: "Total Assessments",
+    dash_avg_glucose: "Average Glucose",
+    dash_latest_risk: "Latest Risk Status",
+    dash_recent_activity: "Recent Health Activity",
+    dash_view_all: "View All Reports →",
+    dash_daily_tips: "Daily Preventive Tips",
+
+    assess_label_pregnancies: "Pregnancies",
+    assess_help_pregnancies: "Number of times pregnant (0 for males/nulliparous)",
+    assess_label_glucose: "Glucose (mg/dL) *",
+    assess_help_glucose: "Fasting blood glucose reading",
+    assess_label_bp: "Blood Pressure (mm Hg) *",
+    assess_help_bp: "Resting diastolic pressure",
+    assess_label_skin: "Skin Thickness (mm)",
+    assess_help_skin: "Triceps skin fold caliper measure (approx. 20 if unsure)",
+    assess_label_insulin: "Insulin (µIU/mL)",
+    assess_help_insulin: "2-hour serum insulin lab test (approx. 85 if unsure)",
+    assess_label_bmi: "BMI (kg/m²) *",
+    assess_help_bmi: "Body Mass Index: weight in kg / (height in meters)²",
+    assess_label_pedigree: "Diabetes Pedigree Function *",
+    assess_help_pedigree: "Genetic family history estimate (population average ~0.47)",
+    assess_label_age: "Age (years) *",
+    assess_help_age: "Adult completed years",
+    assess_btn_reset: "Reset Fields",
+    assess_btn_submit: "Check My Risk",
+    assess_upload_title: "Have a home health report?",
+    assess_upload_sub: "Upload your lab test (PDF, JPG, or PNG) to extract measurements.",
+    assess_upload_drop: "Click or drag lab report",
+    assess_privacy_title: "How we treat your data",
+
+    result_prob_title: "Estimated Diabetes Probability",
+    result_conf_title: "Model Confidence",
+    result_date_title: "Assessment Timestamp",
+    result_shap_title: "Key Factors Influencing This Assessment",
+    result_shap_sub: "Explainable AI (SHAP) attributions showing which clinical values decreased or increased your estimated probability.",
+    result_next_steps_title: "Recommended Next Steps",
+    result_btn_save: "Save to My Reports",
+    result_btn_new: "Check Another Assessment",
+
+    reports_search_placeholder: "Search by report ID, date, or category...",
+    reports_filter_all: "All Risk Levels",
+    reports_filter_high: "High Risk",
+    reports_filter_mod: "Moderate Risk",
+    reports_filter_low: "Low Risk",
+    reports_th_date: "Assessment Date",
+    reports_th_category: "Risk Category",
+    reports_th_risk: "Probability",
+    reports_th_glucose: "Glucose",
+    reports_th_bmi: "BMI",
+    reports_th_actions: "Actions",
+
+    glucose_heading: "Track Your Glucose",
+    glucose_btn_add: "+ Log New Reading",
+
+    settings_pref_title: "Application Preferences",
+    settings_lang_title: "Language Preference / भाषा",
+    settings_lang_sub: "Switch between English and हिन्दी (Hindi).",
+    settings_dark_title: "Dark Theme",
+    settings_dark_sub: "Switch to calm medical dark mode (#101817).",
+
+    modal_glucose_title: "Log Blood Glucose Reading",
+    modal_glucose_value: "Blood Glucose Value (mg/dL) *",
+    modal_glucose_ctx: "Measurement Context",
+    ctx_fasting: "Fasting (Morning before meal)",
+    ctx_before: "Before meal",
+    ctx_after: "After meal (2 hrs post-meal)",
+    ctx_bedtime: "Bedtime",
+    ctx_random: "Random check",
+    modal_glucose_note: "Optional Note",
+    btn_cancel: "Cancel",
+    btn_save_reading: "Save Reading",
+
+    cat_low_risk: "Low Risk",
+    cat_moderate_risk: "Moderate Risk",
+    cat_high_risk: "High Risk",
+    theme_light: "Theme: Light",
+    theme_dark: "Theme: Dark"
+  },
+  hi: {
+    nav_home: "होम",
+    nav_features: "सुविधाएँ",
+    nav_how_it_works: "कार्यप्रणाली",
+    nav_about: "हमारे बारे में",
+    nav_resources: "संसाधन",
+    nav_contact: "संपर्क",
+    nav_login: "लॉगिन",
+    nav_signup: "साइन अप",
+    nav_dashboard: "डैशबोर्ड",
+    hero_eyebrow: "<span>रोकथाम</span> • <span>ट्रैकिंग</span> • <span>समझ</span> • <span>स्वस्थ जीवन</span>",
+    hero_title: "प्रारंभिक जागरूकता<br><span class=\"text-highlight\">स्वस्थ और सुरक्षित जीवन के लिए</span>",
+    hero_desc: "एक सरल, डेटा-संचालित स्वास्थ्य मूल्यांकन के साथ अपने मधुमेह जोखिम को समझें। GlucoseSense आपकी स्वास्थ्य जानकारी को स्पष्ट रूप से समझने में मदद करता है ताकि आप सही समय पर उचित कदम उठा सकें।",
+    hero_get_started: "शुरू करें →",
+    hero_learn_more: "और जानें",
+    hero_badge_research: "शोध आधारित",
+    hero_badge_easy: "उपयोग में बेहद सरल",
+    hero_badge_privacy: "डेटा पूर्णतः सुरक्षित व निजी",
+
+    sidebar_overview: "डैशबोर्ड",
+    sidebar_assess: "जोखिम जांचें",
+    sidebar_reports: "मेरी रिपोर्ट्स",
+    sidebar_glucose: "ग्लूकोज ट्रैकिंग",
+    sidebar_insights: "स्वास्थ्य अंतर्दृष्टि",
+    sidebar_profile: "प्रोफ़ाइल",
+    sidebar_settings: "सेटिंग्स",
+    sidebar_add_glucose: "ग्लूकोज रीडिंग जोड़ें",
+    sidebar_logout: "लॉगआउट",
+    sidebar_lang_label: "भाषा: हिन्दी",
+
+    tab_overview_title: "डैशबोर्ड",
+    tab_overview_sub: "आपकी हालिया स्वास्थ्य स्थिति और गतिविधि का त्वरित विवरण।",
+    tab_assess_title: "मधुमेह जोखिम का आकलन",
+    tab_assess_sub: "अनुमानित जोखिम जानने के लिए अपनी नवीनतम स्वास्थ्य जानकारी दर्ज करें।",
+    tab_result_title: "आपका स्वास्थ्य मूल्यांकन",
+    tab_result_sub: "मशीन लर्निंग संभावना और व्याख्यात्मक एआई (SHAP) कारक।",
+    tab_detail_title: "आकलन विवरण",
+    tab_detail_sub: "विस्तृत क्लिनिकल बायोमार्कर्स और स्वास्थ्य मेट्रिक्स।",
+    tab_reports_title: "स्वास्थ्य रिपोर्ट्स",
+    tab_reports_sub: "पिछले आकलनों और ऐतिहासिक प्रवृत्तियों की समीक्षा करें।",
+    tab_glucose_title: "ग्लूकोज ट्रैक करें",
+    tab_glucose_sub: "रक्त शर्करा लॉग और लक्ष्य सीमा विश्लेषण।",
+    tab_insights_title: "स्वास्थ्य अंतर्दृष्टि",
+    tab_insights_sub: "प्रमाण आधारित क्लिनिकल दिशानिर्देश और रोकथाम रणनीतियाँ।",
+    tab_profile_title: "प्रोफ़ाइल",
+    tab_profile_sub: "व्यक्तिगत विवरण और बायोमेट्रिक बेसलाइन प्रबंधित करें।",
+    tab_settings_title: "सेटिंग्स",
+    tab_settings_sub: "एपीआई कनेक्शन, विज़ुअल थीम, भाषा और स्वास्थ्य डेटा निर्यात।",
+
+    dash_total_assessments: "कुल आकलन",
+    dash_avg_glucose: "औसत ग्लूकोज",
+    dash_latest_risk: "नवीनतम जोखिम स्तर",
+    dash_recent_activity: "हालिया स्वास्थ्य गतिविधि",
+    dash_view_all: "सभी रिपोर्ट्स देखें →",
+    dash_daily_tips: "दैनिक रोकथाम सुझाव",
+
+    assess_label_pregnancies: "गर्भावस्था (Pregnancies)",
+    assess_help_pregnancies: "गर्भावस्था की संख्या (पुरुषों या शून्य के लिए 0 दर्ज करें)",
+    assess_label_glucose: "ग्लूकोज (mg/dL) *",
+    assess_help_glucose: "फास्टिंग ब्लड ग्लूकोज (खाली पेट रक्त शर्करा)",
+    assess_label_bp: "रक्तचाप (mm Hg) *",
+    assess_help_bp: "विश्राम के समय डायस्टोलिक रक्तचाप (निचला माप)",
+    assess_label_skin: "त्वचा की मोटाई (mm)",
+    assess_help_skin: "ट्राइसेप्स त्वचा की मोटाई (यदि अनिश्चित हों तो 20 रहने दें)",
+    assess_label_insulin: "इंसुलिन (µIU/mL)",
+    assess_help_insulin: "2 घंटे का सीरम इंसुलिन परीक्षण (यदि अनिश्चित हों तो 85 रहने दें)",
+    assess_label_bmi: "बॉडी मास इंडेक्स (BMI) *",
+    assess_help_bmi: "बीएमआई: वजन (किग्रा) / (ऊंचाई मीटर में)²",
+    assess_label_pedigree: "आनुवंशिक वंशक्रम स्कोर (Pedigree) *",
+    assess_help_pedigree: "पारिवारिक आनुवंशिक इतिहास का अनुमान (औसत ~0.47)",
+    assess_label_age: "आयु (वर्ष) *",
+    assess_help_age: "पूर्ण वयस्क आयु (वर्षों में)",
+    assess_btn_reset: "फ़ील्ड रीसेट करें",
+    assess_btn_submit: "जोखिम जांचें",
+    assess_upload_title: "क्या आपके पास लैब टेस्ट रिपोर्ट है?",
+    assess_upload_sub: "माप स्वतः भरने के लिए अपनी लैब रिपोर्ट (PDF, JPG, PNG) अपलोड करें।",
+    assess_upload_drop: "लैब रिपोर्ट चुनें या यहाँ खींचें",
+    assess_privacy_title: "डेटा गोपनीयता की गारंटी",
+
+    result_prob_title: "अनुमानित मधुमेह जोखिम संभावना",
+    result_conf_title: "मॉडल विश्वसनीयता",
+    result_date_title: "मूल्यांकन दिनांक एवं समय",
+    result_shap_title: "इस मूल्यांकन को प्रभावित करने वाले मुख्य कारक",
+    result_shap_sub: "व्याख्यात्मक एआई (SHAP) विश्लेषण: जानें किन मानों ने जोखिम घटाया या बढ़ाया।",
+    result_next_steps_title: "अनुशंसित अगले कदम",
+    result_btn_save: "रिपोर्ट्स में सहेजें",
+    result_btn_new: "दूसरा आकलन करें",
+
+    reports_search_placeholder: "आईडी, दिनांक या श्रेणी से खोजें...",
+    reports_filter_all: "सभी जोखिम स्तर",
+    reports_filter_high: "उच्च जोखिम (High Risk)",
+    reports_filter_mod: "मध्यम जोखिम (Moderate Risk)",
+    reports_filter_low: "कम जोखिम (Low Risk)",
+    reports_th_date: "आकलन दिनांक",
+    reports_th_category: "जोखिम श्रेणी",
+    reports_th_risk: "संभावना",
+    reports_th_glucose: "ग्लूकोज",
+    reports_th_bmi: "बीएमआई",
+    reports_th_actions: "कार्यवाही",
+
+    glucose_heading: "ग्लूकोज ट्रैक करें",
+    glucose_btn_add: "+ नई रीडिंग दर्ज करें",
+
+    settings_pref_title: "एप्लिकेशन प्राथमिकताएं",
+    settings_lang_title: "भाषा / Language",
+    settings_lang_sub: "अंग्रेजी (English) और हिन्दी के बीच भाषा बदलें।",
+    settings_dark_title: "डार्क थीम (Dark Theme)",
+    settings_dark_sub: "आरामदायक शांत मेडिकल डार्क मोड (#101817) चालू करें।",
+
+    modal_glucose_title: "ग्लूकोज रीडिंग दर्ज करें",
+    modal_glucose_value: "रक्त शर्करा मान (mg/dL) *",
+    modal_glucose_ctx: "माप का संदर्भ (Context)",
+    ctx_fasting: "फास्टिंग (सुबह खाली पेट)",
+    ctx_before: "भोजन से पहले",
+    ctx_after: "भोजन के 2 घंटे बाद",
+    ctx_bedtime: "सोने से पहले",
+    ctx_random: "रैंडम चेक",
+    modal_glucose_note: "वैकल्पिक टिप्पणी",
+    btn_cancel: "रद्द करें",
+    btn_save_reading: "रीडिंग सहेजें",
+
+    cat_low_risk: "कम जोखिम (Low Risk)",
+    cat_moderate_risk: "मध्यम जोखिम (Moderate Risk)",
+    cat_high_risk: "उच्च जोखिम (High Risk)",
+    theme_light: "थीम: लाइट",
+    theme_dark: "थीम: डार्क"
+  }
+};
+
+function t(key, defaultVal) {
+  const lang = AppState.lang || 'en';
+  if (I18N[lang] && I18N[lang][key] !== undefined) {
+    return I18N[lang][key];
+  }
+  if (I18N.en && I18N.en[key] !== undefined) {
+    return I18N.en[key];
+  }
+  return defaultVal !== undefined ? defaultVal : key;
+}
+
+function applyTranslations(lang) {
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    const val = t(key);
+    if (val) {
+      if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+        el.value = val;
+      } else {
+        el.textContent = val;
+      }
+    }
+  });
+
+  document.querySelectorAll('[data-i18n-html]').forEach(el => {
+    const key = el.getAttribute('data-i18n-html');
+    const val = t(key);
+    if (val) el.innerHTML = val;
+  });
+
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    const key = el.getAttribute('data-i18n-placeholder');
+    const val = t(key);
+    if (val) el.setAttribute('placeholder', val);
+  });
+
+  document.querySelectorAll('[data-i18n-title]').forEach(el => {
+    const key = el.getAttribute('data-i18n-title');
+    const val = t(key);
+    if (val) el.setAttribute('title', val);
+  });
+}
+
+function updateThemeToggleLabel(theme) {
+  const label = document.getElementById('themeToggleLabel');
+  if (!label) return;
+  const isDark = theme === 'dark';
+  if (AppState.lang === 'hi') {
+    label.textContent = isDark ? 'थीम: डार्क' : 'थीम: लाइट';
+  } else {
+    label.textContent = isDark ? 'Theme: Dark' : 'Theme: Light';
+  }
+}
+
+function initLanguage() {
+  setLanguage(AppState.lang, false);
+}
+
+function setLanguage(lang, notify = true) {
+  AppState.lang = lang;
+  localStorage.setItem('diapredict_lang', lang);
+  document.documentElement.setAttribute('lang', lang);
+
+  // Update button labels
+  const landingLangLabel = document.getElementById('landingLangLabel');
+  const sidebarLangLabel = document.getElementById('sidebarLangLabel');
+  const topNavLangLabel = document.getElementById('topNavLangLabel');
+
+  if (landingLangLabel) landingLangLabel.textContent = lang === 'hi' ? 'English' : 'हिन्दी';
+  if (topNavLangLabel) topNavLangLabel.textContent = lang === 'hi' ? 'English' : 'हिन्दी';
+  if (sidebarLangLabel) sidebarLangLabel.textContent = lang === 'hi' ? 'भाषा: हिन्दी' : 'Language: English';
+
+  updateThemeToggleLabel(AppState.theme);
+
+  // Update Settings buttons
+  const btnEn = document.getElementById('settingsLangEnBtn');
+  const btnHi = document.getElementById('settingsLangHiBtn');
+  if (btnEn && btnHi) {
+    if (lang === 'hi') {
+      btnHi.classList.add('active');
+      btnEn.classList.remove('active');
+    } else {
+      btnEn.classList.add('active');
+      btnHi.classList.remove('active');
+    }
+  }
+
+  applyTranslations(lang);
+  updateViewHeadings();
+
+  // Re-render active view dynamic contents
+  if (AppState.currentView === 'overview') renderDashboardOverview();
+  if (AppState.currentView === 'reports') renderReportsTable();
+  if (AppState.currentView === 'glucose') renderGlucoseTracking();
+  if (AppState.currentView === 'result' && AppState.latestAssessment) {
+    displayPredictionResult(AppState.latestAssessment);
+  }
+
+  if (notify) {
+    showToast(lang === 'hi' ? 'भाषा बदलकर हिन्दी कर दी गई है।' : 'Language changed to English.');
+  }
+}
+
+function updateViewHeadings() {
+  const headings = {
+    overview: { 
+      title: t('tab_overview_title', 'Dashboard'), 
+      sub: t('tab_overview_sub', "Here's a quick look at your recent health activity.") 
+    },
+    assess: { 
+      title: t('tab_assess_title', 'Check Your Diabetes Risk'), 
+      sub: t('tab_assess_sub', 'Enter clinical biomarkers to generate an estimated risk assessment.') 
+    },
+    result: { 
+      title: t('tab_result_title', 'Your Health Assessment'), 
+      sub: t('tab_result_sub', 'Machine learning probability and Explainable AI (SHAP) attributions.') 
+    },
+    'report-detail': { 
+      title: t('tab_detail_title', 'Assessment Details'), 
+      sub: t('tab_detail_sub', 'Comprehensive clinical biomarker breakdown and metrics.') 
+    },
+    reports: { 
+      title: t('tab_reports_title', 'Your Health Reports'), 
+      sub: t('tab_reports_sub', 'Review previous assessments and historical risk trajectories.') 
+    },
+    glucose: { 
+      title: t('tab_glucose_title', 'Track Your Glucose'), 
+      sub: t('tab_glucose_sub', 'Blood sugar log and target range trend analysis.') 
+    },
+    insights: { 
+      title: t('tab_insights_title', 'Health Insights'), 
+      sub: t('tab_insights_sub', 'Evidence-based clinical guidelines and prevention strategies.') 
+    },
+    profile: { 
+      title: t('tab_profile_title', 'Profile'), 
+      sub: t('tab_profile_sub', 'Manage personal details and biometric baselines.') 
+    },
+    settings: { 
+      title: t('tab_settings_title', 'Settings'), 
+      sub: t('tab_settings_sub', 'API connection parameters, visual theme, and health data export.') 
+    }
+  };
+
+  const headerInfo = headings[AppState.currentView] || { title: 'GlucoseSense', sub: 'Diabetes Risk Decision Support' };
+  const h1 = document.getElementById('viewHeading');
+  const p = document.getElementById('viewSubheading');
+  if (h1) h1.textContent = headerInfo.title;
+  if (p) p.textContent = headerInfo.sub;
+}
+
+// ============================================================================
 // 4. LIFECYCLE & ROUTING
 // ============================================================================
 document.addEventListener('DOMContentLoaded', () => {
   initTheme();
+  initLanguage();
   updateUserUI();
   updateMlStatusBadges();
   setupNavigation();
@@ -402,9 +922,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function initTheme() {
   document.documentElement.setAttribute('data-theme', AppState.theme);
-  const label = document.getElementById('themeToggleLabel');
+  updateThemeToggleLabel(AppState.theme);
   const toggleCheckbox = document.getElementById('settingsDarkToggle');
-  if (label) label.textContent = AppState.theme === 'dark' ? 'Theme: Dark' : 'Theme: Light';
   if (toggleCheckbox) toggleCheckbox.checked = AppState.theme === 'dark';
 }
 
@@ -412,10 +931,8 @@ function setTheme(mode) {
   AppState.theme = mode;
   document.documentElement.setAttribute('data-theme', mode);
   localStorage.setItem('diapredict_theme', mode);
-
-  const label = document.getElementById('themeToggleLabel');
+  updateThemeToggleLabel(mode);
   const toggleCheckbox = document.getElementById('settingsDarkToggle');
-  if (label) label.textContent = mode === 'dark' ? 'Theme: Dark' : 'Theme: Light';
   if (toggleCheckbox) toggleCheckbox.checked = mode === 'dark';
 }
 
@@ -467,6 +984,14 @@ function setupNavigation() {
     });
   }
 
+  const landingLangToggleBtn = document.getElementById('landingLangToggleBtn');
+  if (landingLangToggleBtn) {
+    landingLangToggleBtn.addEventListener('click', () => {
+      const nextLang = AppState.lang === 'en' ? 'hi' : 'en';
+      setLanguage(nextLang);
+    });
+  }
+
   const sidebarBrandBlock = document.getElementById('sidebarBrandBlock');
   if (sidebarBrandBlock) {
     sidebarBrandBlock.addEventListener('click', () => showLandingPage());
@@ -499,25 +1024,8 @@ function navigateTo(tabId) {
     }
   });
 
-  const headings = {
-    overview: { title: 'Dashboard', sub: "Here's a quick look at your recent health activity." },
-    assess: { title: 'Check Your Diabetes Risk', sub: 'Enter clinical biomarkers to generate an estimated risk assessment.' },
-    result: { title: 'Your Health Assessment', sub: 'Machine learning probability and Explainable AI (SHAP) attributions.' },
-    'report-detail': { title: 'Assessment Details', sub: 'Comprehensive clinical biomarker breakdown and metrics.' },
-    reports: { title: 'Your Health Reports', sub: 'Review previous assessments and historical risk trajectories.' },
-    glucose: { title: 'Track Your Glucose', sub: 'Blood sugar log and target range trend analysis.' },
-    insights: { title: 'Health Insights', sub: 'Evidence-based clinical guidelines and prevention strategies.' },
-    profile: { title: 'Profile', sub: 'Manage personal details and biometric baselines.' },
-    settings: { title: 'Settings', sub: 'API connection parameters, visual theme, and health data export.' }
-  };
-
-  const headerInfo = headings[tabId] || { title: 'GlucoseSense', sub: 'Diabetes Risk Decision Support' };
-  const h1 = document.getElementById('viewHeading');
-  const p = document.getElementById('viewSubheading');
-  if (h1) h1.textContent = headerInfo.title;
-  if (p) p.textContent = headerInfo.sub;
-
   AppState.currentView = tabId;
+  updateViewHeadings();
 
   if (tabId === 'overview') renderDashboardOverview();
   if (tabId === 'reports') renderReportsTable();
@@ -548,19 +1056,23 @@ function updateUserUI() {
   const profileAgeInput = document.getElementById('profileAge');
   const profileGenderSelect = document.getElementById('profileGender');
 
-  if (nameEl) nameEl.textContent = AppState.user.name;
+  const displayName = AppState.user.name || 'User';
+  const displayInitial = (AppState.user.avatarLetter || displayName.charAt(0) || 'U').toUpperCase();
+  const avatarColor = AppState.user.avatarBg || '#059669';
+
+  if (nameEl) nameEl.textContent = displayName;
   if (avatarEl) {
-    avatarEl.textContent = AppState.user.name.charAt(0).toUpperCase();
-    avatarEl.style.backgroundColor = AppState.user.avatarBg;
+    avatarEl.textContent = displayInitial;
+    avatarEl.style.backgroundColor = avatarColor;
   }
   if (bigAvatar) {
-    bigAvatar.textContent = AppState.user.name.charAt(0).toUpperCase();
-    bigAvatar.style.backgroundColor = AppState.user.avatarBg;
+    bigAvatar.textContent = displayInitial;
+    bigAvatar.style.backgroundColor = avatarColor;
   }
-  if (profileNameInput) profileNameInput.value = AppState.user.name;
-  if (profileEmailInput) profileEmailInput.value = AppState.user.email;
-  if (profileAgeInput) profileAgeInput.value = AppState.user.age;
-  if (profileGenderSelect) profileGenderSelect.value = AppState.user.gender;
+  if (profileNameInput) profileNameInput.value = AppState.user.name || '';
+  if (profileEmailInput) profileEmailInput.value = AppState.user.email || '';
+  if (profileAgeInput) profileAgeInput.value = AppState.user.age || '';
+  if (profileGenderSelect) profileGenderSelect.value = AppState.user.gender || 'Male';
 }
 
 // ============================================================================
@@ -658,7 +1170,36 @@ function setupEventListeners() {
     setTheme(nextTheme);
   });
 
+  document.getElementById('sidebarLangToggleBtn')?.addEventListener('click', () => {
+    const nextLang = AppState.lang === 'en' ? 'hi' : 'en';
+    setLanguage(nextLang);
+  });
+
+  document.getElementById('topNavLangToggleBtn')?.addEventListener('click', () => {
+    const nextLang = AppState.lang === 'en' ? 'hi' : 'en';
+    setLanguage(nextLang);
+  });
+
+  document.getElementById('settingsLangEnBtn')?.addEventListener('click', () => setLanguage('en'));
+  document.getElementById('settingsLangHiBtn')?.addEventListener('click', () => setLanguage('hi'));
+
   document.getElementById('logoutBtn')?.addEventListener('click', () => {
+    localStorage.removeItem('diapredict_user');
+    AppState.user = { ...DEFAULT_GUEST_USER };
+    AppState.reports = [];
+    AppState.glucoseReadings = [];
+    AppState.latestAssessment = null;
+    AppState.activeDetailReport = null;
+    updateUserUI();
+    renderDashboardOverview();
+    renderReportsTable();
+    renderGlucoseTracking();
+
+    const loginForm = document.getElementById('loginForm');
+    if (loginForm) loginForm.reset();
+    const signupForm = document.getElementById('signupForm');
+    if (signupForm) signupForm.reset();
+
     showLandingPage();
     showToast('You have logged out.');
   });
@@ -706,7 +1247,7 @@ function setupEventListeners() {
       };
 
       AppState.glucoseReadings.unshift(newReading);
-      localStorage.setItem('diapredict_glucose', JSON.stringify(AppState.glucoseReadings));
+      saveUserGlucose(AppState.user?.email, AppState.glucoseReadings);
 
       closeModal('recordGlucoseModal');
       document.getElementById('quickGlucoseVal').value = '';
@@ -721,6 +1262,52 @@ function setupEventListeners() {
   // Auth Forms
   document.getElementById('loginForm')?.addEventListener('submit', (e) => {
     e.preventDefault();
+    const emailInput = document.getElementById('loginEmail');
+    const passwordInput = document.getElementById('loginPassword');
+    const email = emailInput?.value?.trim().toLowerCase();
+    const password = passwordInput?.value;
+
+    if (!email) {
+      showToast('Please enter your email.', 'warning');
+      return;
+    }
+
+    const existing = findRegisteredAccount(email);
+    if (existing) {
+      AppState.user = { ...existing };
+      AppState.reports = loadUserReports(existing.email);
+      AppState.glucoseReadings = loadUserGlucose(existing.email);
+    } else {
+      const derivedName = deriveNameFromEmail(email);
+      const newUser = {
+        name: derivedName,
+        email: email,
+        password: password || '',
+        age: 28,
+        gender: 'Male',
+        avatarLetter: (derivedName.charAt(0) || 'U').toUpperCase(),
+        avatarBg: '#059669'
+      };
+      AppState.user = newUser;
+      AppState.reports = [];
+      AppState.glucoseReadings = [];
+      saveRegisteredAccount(newUser);
+      saveUserReports(email, []);
+      saveUserGlucose(email, []);
+    }
+
+    AppState.latestAssessment = AppState.reports.length > 0 ? AppState.reports[0] : null;
+    AppState.activeDetailReport = AppState.latestAssessment;
+    localStorage.setItem('diapredict_user', JSON.stringify(AppState.user));
+
+    updateUserUI();
+    renderDashboardOverview();
+    renderReportsTable();
+    renderGlucoseTracking();
+
+    if (emailInput) emailInput.value = '';
+    if (passwordInput) passwordInput.value = '';
+
     closeModal('loginModal');
     showAppShell();
     navigateTo('overview');
@@ -729,22 +1316,77 @@ function setupEventListeners() {
 
   document.getElementById('signupForm')?.addEventListener('submit', (e) => {
     e.preventDefault();
-    const name = document.getElementById('signupName')?.value;
-    const email = document.getElementById('signupEmail')?.value;
-    const pass = document.getElementById('signupPassword')?.value;
-    const confirmPass = document.getElementById('signupConfirmPassword')?.value;
+    const nameInput = document.getElementById('signupName');
+    const emailInput = document.getElementById('signupEmail');
+    const passInput = document.getElementById('signupPassword');
+    const confirmPassInput = document.getElementById('signupConfirmPassword');
 
-    if (pass !== confirmPass) {
-      showToast('Passwords do not match. Please verify.', 'warning');
+    const name = nameInput?.value?.trim();
+    const email = emailInput?.value?.trim().toLowerCase();
+    const pass = passInput?.value || '';
+    const confirmPass = confirmPassInput?.value || '';
+
+    if (!name) {
+      showToast('Please enter your full name.', 'warning');
+      nameInput?.focus();
       return;
     }
 
-    if (name) AppState.user.name = name;
-    if (email) AppState.user.email = email;
+    if (!email) {
+      showToast('Please enter your email address.', 'warning');
+      emailInput?.focus();
+      return;
+    }
+
+    if (pass && confirmPass && pass !== confirmPass) {
+      showToast('Passwords do not match. Please verify.', 'warning');
+      confirmPassInput?.focus();
+      return;
+    }
+
+    const avatarLetter = (name.charAt(0) || 'U').toUpperCase();
+    const newUser = {
+      name: name,
+      email: email,
+      password: pass,
+      age: 28,
+      gender: 'Male',
+      avatarLetter: avatarLetter,
+      avatarBg: '#059669'
+    };
+
+    AppState.user = newUser;
+    AppState.reports = [];
+    AppState.glucoseReadings = [];
+    AppState.latestAssessment = null;
+    AppState.activeDetailReport = null;
+
+    localStorage.setItem('diapredict_user', JSON.stringify(AppState.user));
+    saveRegisteredAccount(AppState.user);
+    saveUserReports(email, []);
+    saveUserGlucose(email, []);
+
     updateUserUI();
+    renderDashboardOverview();
+    renderReportsTable();
+    renderGlucoseTracking();
+
+    if (nameInput) nameInput.value = '';
+    if (emailInput) emailInput.value = '';
+    if (passInput) passInput.value = '';
+    if (confirmPassInput) confirmPassInput.value = '';
 
     closeModal('signupModal');
-    openOnboardingWizard();
+    showAppShell();
+    navigateTo('overview');
+    showToast(`Welcome, ${name}! Your account has been registered and is now active.`, 'success');
+  });
+
+  document.getElementById('btnCompleteRegistration')?.addEventListener('click', () => {
+    const signupForm = document.getElementById('signupForm');
+    if (signupForm && typeof signupForm.requestSubmit === 'function') {
+      signupForm.requestSubmit();
+    }
   });
 
   document.getElementById('forgotPasswordForm')?.addEventListener('submit', (e) => {
@@ -754,6 +1396,27 @@ function setupEventListeners() {
   });
 
   document.getElementById('ssoGoogleBtn')?.addEventListener('click', () => {
+    const ssoUser = {
+      name: 'Google User',
+      email: 'user@gmail.com',
+      age: 28,
+      gender: 'Male',
+      avatarLetter: 'G',
+      avatarBg: '#4285F4'
+    };
+    AppState.user = ssoUser;
+    AppState.reports = loadUserReports(ssoUser.email);
+    AppState.glucoseReadings = loadUserGlucose(ssoUser.email);
+    AppState.latestAssessment = AppState.reports.length > 0 ? AppState.reports[0] : null;
+    AppState.activeDetailReport = AppState.latestAssessment;
+    localStorage.setItem('diapredict_user', JSON.stringify(AppState.user));
+    saveRegisteredAccount(ssoUser);
+
+    updateUserUI();
+    renderDashboardOverview();
+    renderReportsTable();
+    renderGlucoseTracking();
+
     closeModal('loginModal');
     showAppShell();
     navigateTo('overview');
@@ -761,6 +1424,27 @@ function setupEventListeners() {
   });
 
   document.getElementById('ssoMicrosoftBtn')?.addEventListener('click', () => {
+    const ssoUser = {
+      name: 'Microsoft User',
+      email: 'user@outlook.com',
+      age: 28,
+      gender: 'Male',
+      avatarLetter: 'M',
+      avatarBg: '#00A4EF'
+    };
+    AppState.user = ssoUser;
+    AppState.reports = loadUserReports(ssoUser.email);
+    AppState.glucoseReadings = loadUserGlucose(ssoUser.email);
+    AppState.latestAssessment = AppState.reports.length > 0 ? AppState.reports[0] : null;
+    AppState.activeDetailReport = AppState.latestAssessment;
+    localStorage.setItem('diapredict_user', JSON.stringify(AppState.user));
+    saveRegisteredAccount(ssoUser);
+
+    updateUserUI();
+    renderDashboardOverview();
+    renderReportsTable();
+    renderGlucoseTracking();
+
     closeModal('loginModal');
     showAppShell();
     navigateTo('overview');
@@ -774,8 +1458,15 @@ function setupEventListeners() {
   document.getElementById('predictionForm')?.addEventListener('submit', handlePredictionSubmit);
 
   document.getElementById('resetAssessFormBtn')?.addEventListener('click', () => {
-    document.getElementById('predictionForm')?.reset();
-    showToast('Assessment inputs reset.');
+    const form = document.getElementById('predictionForm');
+    if (form) {
+      form.reset();
+      form.querySelectorAll('input').forEach(input => {
+        input.value = '';
+        input.classList.remove('is-invalid');
+      });
+    }
+    showToast('Assessment inputs cleared.');
   });
 
   // Result Actions
@@ -812,11 +1503,21 @@ function setupEventListeners() {
   // Profile
   document.getElementById('profileForm')?.addEventListener('submit', (e) => {
     e.preventDefault();
-    AppState.user.name = document.getElementById('profileFullName').value;
-    AppState.user.email = document.getElementById('profileEmail').value;
-    AppState.user.age = parseInt(document.getElementById('profileAge').value, 10);
-    AppState.user.gender = document.getElementById('profileGender').value;
+    const name = document.getElementById('profileFullName')?.value?.trim();
+    const email = document.getElementById('profileEmail')?.value?.trim();
+    const age = parseInt(document.getElementById('profileAge')?.value, 10);
+    const gender = document.getElementById('profileGender')?.value;
+
+    if (name) {
+      AppState.user.name = name;
+      AppState.user.avatarLetter = name.charAt(0).toUpperCase();
+    }
+    if (email) AppState.user.email = email;
+    if (!isNaN(age)) AppState.user.age = age;
+    if (gender) AppState.user.gender = gender;
+
     localStorage.setItem('diapredict_user', JSON.stringify(AppState.user));
+    saveRegisteredAccount(AppState.user);
     updateUserUI();
     showToast('Personal information updated.', 'success');
   });
@@ -908,6 +1609,12 @@ function setupEventListeners() {
 function openOnboardingWizard() {
   openModal('onboardingModal');
   showOnboardingStep(1);
+  const obName = document.getElementById('obName');
+  const obAge = document.getElementById('obAge');
+  const obGender = document.getElementById('obGender');
+  if (obName) obName.value = AppState.user.name || '';
+  if (obAge) obAge.value = AppState.user.age || '';
+  if (obGender && AppState.user.gender) obGender.value = AppState.user.gender;
 }
 
 function showOnboardingStep(stepNumber) {
@@ -927,12 +1634,16 @@ function showOnboardingStep(stepNumber) {
 
 function setupOnboardingWizard() {
   document.getElementById('obNextBtn1')?.addEventListener('click', () => {
-    const name = document.getElementById('obName')?.value;
+    const name = document.getElementById('obName')?.value?.trim();
     const age = parseInt(document.getElementById('obAge')?.value, 10);
     const gender = document.getElementById('obGender')?.value;
-    if (name) AppState.user.name = name;
-    if (age) AppState.user.age = age;
+    if (name) {
+      AppState.user.name = name;
+      AppState.user.avatarLetter = name.charAt(0).toUpperCase();
+    }
+    if (!isNaN(age)) AppState.user.age = age;
     if (gender) AppState.user.gender = gender;
+    updateUserUI();
     showOnboardingStep(2);
   });
 
@@ -943,10 +1654,14 @@ function setupOnboardingWizard() {
   document.getElementById('obFinishBtn')?.addEventListener('click', () => {
     closeModal('onboardingModal');
     localStorage.setItem('diapredict_user', JSON.stringify(AppState.user));
+    saveRegisteredAccount(AppState.user);
     updateUserUI();
+    renderDashboardOverview();
+    renderReportsTable();
+    renderGlucoseTracking();
     showAppShell();
     navigateTo('overview');
-    showToast('Your health profile is active. Welcome!', 'success');
+    showToast(`Your health profile is active. Welcome, ${AppState.user.name}!`, 'success');
   });
 }
 
@@ -1135,8 +1850,12 @@ function displayPredictionResult(data) {
   const gaugeCircle = document.getElementById('resultGaugeCircle');
   const demoBadge = document.getElementById('demoShapBadge');
 
+  const categoryLabel = AppState.lang === 'hi'
+    ? (data.category === 'High Risk' ? 'उच्च जोखिम (High Risk)' : (data.category === 'Moderate Risk' ? 'मध्यम जोखिम (Moderate Risk)' : 'कम जोखिम (Low Risk)'))
+    : data.category;
+
   if (probVal) probVal.textContent = `${data.risk}%`;
-  if (catText) catText.textContent = data.category;
+  if (catText) catText.textContent = categoryLabel;
   if (confVal) confVal.textContent = `${data.confidence}%`;
   if (dateVal) dateVal.textContent = data.date;
 
@@ -1156,19 +1875,35 @@ function displayPredictionResult(data) {
   }
 
   if (demoBadge) {
-    demoBadge.textContent = data.isDemo ? 'Calibrated explanation' : 'Model explanation';
+    if (AppState.lang === 'hi') {
+      demoBadge.textContent = data.isDemo ? 'कैलिब्रेटेड व्याख्या' : 'मॉडल व्याख्या';
+    } else {
+      demoBadge.textContent = data.isDemo ? 'Calibrated explanation' : 'Model explanation';
+    }
   }
 
   if (statement) {
-    statement.textContent = data.category === 'Low Risk'
-      ? "“Based on clinical parameters provided, the model estimates a relatively low Type 2 diabetes risk profile.”"
-      : (data.category === 'Moderate Risk'
-        ? "“Based on clinical parameters provided, moderate risk considerations were detected requiring proactive monitoring.”"
-        : "“Based on clinical parameters provided, elevated risk indicators were identified.”");
+    if (AppState.lang === 'hi') {
+      statement.textContent = data.category === 'Low Risk'
+        ? "“प्रदान किए गए क्लिनिकल मापदंडों के आधार पर, मॉडल अपेक्षाकृत कम टाइप 2 मधुमेह जोखिम का अनुमान लगाता है।”"
+        : (data.category === 'Moderate Risk'
+          ? "“प्रदान किए गए क्लिनिकल मापदंडों के आधार पर, मध्यम जोखिम के संकेत मिले हैं जिन पर सक्रिय निगरानी आवश्यक है।”"
+          : "“प्रदान किए गए क्लिनिकल मापदंडों के आधार पर, उच्च जोखिम संकेतक पाए गए हैं जिन पर क्लिनिकल परामर्श की अनुशंसा है।”");
+    } else {
+      statement.textContent = data.category === 'Low Risk'
+        ? "“Based on clinical parameters provided, the model estimates a relatively low Type 2 diabetes risk profile.”"
+        : (data.category === 'Moderate Risk'
+          ? "“Based on clinical parameters provided, moderate risk considerations were detected requiring proactive monitoring.”"
+          : "“Based on clinical parameters provided, elevated risk indicators were identified.”");
+    }
   }
 
   if (extended) {
-    extended.textContent = `Fasting blood glucose (${data.glucose} mg/dL) and BMI (${data.bmi} kg/m²) are primary indicators shaping this evaluation. Balanced nutrition and steady physical activity support healthy trends.`;
+    if (AppState.lang === 'hi') {
+      extended.textContent = `फास्टिंग ब्लड ग्लूकोज (${data.glucose} mg/dL) और बीएमआई (${data.bmi} kg/m²) इस मूल्यांकन को आकार देने वाले प्राथमिक संकेतक हैं। संतुलित पोषण और नियमित शारीरिक गतिविधि स्वस्थ प्रवृत्तियों का समर्थन करती है।`;
+    } else {
+      extended.textContent = `Fasting blood glucose (${data.glucose} mg/dL) and BMI (${data.bmi} kg/m²) are primary indicators shaping this evaluation. Balanced nutrition and steady physical activity support healthy trends.`;
+    }
   }
 
   renderShapBars(data.shap, 'shapBarsContainer');
@@ -1180,9 +1915,21 @@ function renderShapBars(shapData, containerId) {
   container.innerHTML = '';
 
   if (!Array.isArray(shapData) || shapData.length === 0) {
-    container.innerHTML = '<div style="padding:1rem;color:var(--text-muted);text-align:center;">No local attribution data available.</div>';
+    const emptyMsg = AppState.lang === 'hi' ? 'कोई स्थानीय कारक विश्लेषण डेटा उपलब्ध नहीं है।' : 'No local attribution data available.';
+    container.innerHTML = `<div style="padding:1rem;color:var(--text-muted);text-align:center;">${emptyMsg}</div>`;
     return;
   }
+
+  const featureHindiNames = {
+    'Fasting Blood Glucose': 'फास्टिंग ग्लूकोज (Glucose)',
+    'Body Mass Index (BMI)': 'बॉडी मास इंडेक्स (BMI)',
+    'Demographic Age': 'आयु (Age)',
+    'Diastolic Blood Pressure': 'डायस्टोलिक रक्तचाप (BP)',
+    'Genetic Pedigree Score': 'आनुवंशिक स्कोर (Pedigree)',
+    'Serum Insulin': 'सीरम इंसुलिन (Insulin)',
+    'Triceps Skin Thickness': 'त्वचा की मोटाई (Skin)',
+    'Pregnancies': 'गर्भावस्था (Pregnancies)'
+  };
 
   const maxVal = Math.max(...shapData.map(s => Math.abs(s.value || 0)), 0.25);
 
@@ -1194,9 +1941,12 @@ function renderShapBars(shapData, containerId) {
     const barWidthPercent = Math.min(100, Math.round((Math.abs(item.value || 0) / maxVal) * 94));
     const sign = isPositive ? '+' : '';
     const num = typeof item.value === 'number' ? item.value.toFixed(2) : '0.00';
+    const featureName = (AppState.lang === 'hi' && featureHindiNames[item.feature])
+      ? featureHindiNames[item.feature]
+      : item.feature;
 
     row.innerHTML = `
-      <div class="shap-feature-title" title="${item.feature}">${item.feature}</div>
+      <div class="shap-feature-title" title="${item.feature}">${featureName}</div>
       <div class="shap-bar-track" role="progressbar" aria-valuenow="${barWidthPercent}" aria-valuemin="0" aria-valuemax="100">
         <div class="shap-bar-fill ${isPositive ? 'positive' : 'negative'}" style="width: ${barWidthPercent}%;"></div>
       </div>
@@ -1216,7 +1966,7 @@ function saveCurrentAssessment() {
   const existingIndex = AppState.reports.findIndex(r => r.id === AppState.latestAssessment.id);
   if (existingIndex === -1) {
     AppState.reports.unshift(AppState.latestAssessment);
-    localStorage.setItem('diapredict_reports', JSON.stringify(AppState.reports));
+    saveUserReports(AppState.user?.email, AppState.reports);
   }
 
   renderReportsTable();
@@ -1265,20 +2015,29 @@ function renderReportsTable() {
     if (report.category === 'High Risk') badgeClass = 'status-elevated';
     else if (report.category === 'Moderate Risk') badgeClass = 'status-attention';
 
+    const categoryDisplay = AppState.lang === 'hi'
+      ? (report.category === 'High Risk' ? 'उच्च जोखिम' : (report.category === 'Moderate Risk' ? 'मध्यम जोखिम' : 'कम जोखिम'))
+      : report.category;
+    const viewDetailsText = AppState.lang === 'hi' ? 'विवरण देखें →' : 'View Details →';
+    const viewDetailsShort = AppState.lang === 'hi' ? 'विवरण देखें' : 'View Details';
+    const deleteText = AppState.lang === 'hi' ? 'हटाएं' : 'Delete';
+    const probLabel = AppState.lang === 'hi' ? 'संभावना' : 'Probability';
+    const glucoseLabel = AppState.lang === 'hi' ? 'ग्लूकोज' : 'Glucose';
+
     const tr = document.createElement('tr');
     tr.innerHTML = `
       <td style="font-weight: 600;">${report.date}</td>
       <td>
         <span class="status-badge ${badgeClass}">
           <span class="status-indicator-dot"></span>
-          ${report.category}
+          ${categoryDisplay}
         </span>
       </td>
       <td style="font-weight: 700; font-feature-settings: 'tnum';">${report.risk}%</td>
       <td>${report.glucose} mg/dL</td>
       <td>${report.bmi} kg/m²</td>
       <td style="text-align: right;">
-        <button class="btn btn-secondary btn-sm report-view-btn" data-id="${report.id}">View Details →</button>
+        <button class="btn btn-secondary btn-sm report-view-btn" data-id="${report.id}">${viewDetailsText}</button>
         <button class="btn btn-subtle btn-sm report-del-btn" data-id="${report.id}" style="color: var(--status-elevated); margin-left: 0.35rem;" title="Delete">✕</button>
       </td>
     `;
@@ -1289,16 +2048,16 @@ function renderReportsTable() {
     card.innerHTML = `
       <div style="display: flex; justify-content: space-between; align-items: center;">
         <span style="font-size: 0.82rem; font-weight: 600; color: var(--text-muted);">${report.date}</span>
-        <span class="status-badge ${badgeClass}">${report.category}</span>
+        <span class="status-badge ${badgeClass}">${categoryDisplay}</span>
       </div>
       <div style="display: flex; justify-content: space-between; font-size: 0.9rem; margin: 0.35rem 0;">
-        <span>Probability: <strong>${report.risk}%</strong></span>
-        <span>Glucose: <strong>${report.glucose} mg/dL</strong></span>
+        <span>${probLabel}: <strong>${report.risk}%</strong></span>
+        <span>${glucoseLabel}: <strong>${report.glucose} mg/dL</strong></span>
         <span>BMI: <strong>${report.bmi}</strong></span>
       </div>
       <div style="display: flex; justify-content: flex-end; gap: 0.5rem; margin-top: 0.35rem;">
-        <button class="btn btn-secondary btn-sm report-view-btn" data-id="${report.id}">View Details</button>
-        <button class="btn btn-subtle btn-sm report-del-btn" data-id="${report.id}" style="color: var(--status-elevated);">Delete</button>
+        <button class="btn btn-secondary btn-sm report-view-btn" data-id="${report.id}">${viewDetailsShort}</button>
+        <button class="btn btn-subtle btn-sm report-del-btn" data-id="${report.id}" style="color: var(--status-elevated);">${deleteText}</button>
       </div>
     `;
     cardsList.appendChild(card);
@@ -1317,7 +2076,7 @@ function renderReportsTable() {
       const id = btn.getAttribute('data-id');
       if (confirm('Delete this assessment record from your local history?')) {
         AppState.reports = AppState.reports.filter(r => r.id !== id);
-        localStorage.setItem('diapredict_reports', JSON.stringify(AppState.reports));
+        saveUserReports(AppState.user?.email, AppState.reports);
         renderReportsTable();
         renderDashboardOverview();
         showToast('Assessment record deleted.');
@@ -1390,6 +2149,16 @@ function renderGlucoseTracking() {
     if (emptyState) emptyState.style.display = 'block';
     const tbody = document.getElementById('glucoseLogTableBody');
     if (tbody) tbody.innerHTML = '';
+    const avgEl = document.getElementById('glucoseTrackAvg');
+    const latestEl = document.getElementById('glucoseTrackLatest');
+    const latestTimeEl = document.getElementById('glucoseTrackLatestTime');
+    const highEl = document.getElementById('glucoseTrackHigh');
+    const lowEl = document.getElementById('glucoseTrackLow');
+    if (avgEl) avgEl.innerHTML = `-- <small>mg/dL</small>`;
+    if (latestEl) latestEl.innerHTML = `-- <small>mg/dL</small>`;
+    if (latestTimeEl) latestTimeEl.textContent = 'No logs yet';
+    if (highEl) highEl.innerHTML = `-- <small>mg/dL</small>`;
+    if (lowEl) lowEl.innerHTML = `-- <small>mg/dL</small>`;
     return;
   } else {
     if (emptyState) emptyState.style.display = 'none';
@@ -1478,7 +2247,7 @@ function renderGlucoseTracking() {
       btn.addEventListener('click', () => {
         const id = parseInt(btn.getAttribute('data-id'), 10);
         AppState.glucoseReadings = AppState.glucoseReadings.filter(g => g.id !== id);
-        localStorage.setItem('diapredict_glucose', JSON.stringify(AppState.glucoseReadings));
+        saveUserGlucose(AppState.user?.email, AppState.glucoseReadings);
         renderGlucoseTracking();
         renderDashboardOverview();
         showToast('Glucose entry removed.');
@@ -1500,31 +2269,49 @@ function renderDashboardOverview() {
   const latestReportRisk = document.getElementById('dashLatestReportRisk');
   const latestReportGlucose = document.getElementById('dashLatestReportGlucose');
 
-  if (totalReportsEl) totalReportsEl.textContent = AppState.reports.length;
+  if (totalReportsEl) totalReportsEl.textContent = AppState.reports ? AppState.reports.length : 0;
 
-  if (AppState.glucoseReadings.length > 0) {
+  if (AppState.glucoseReadings && AppState.glucoseReadings.length > 0) {
     const vals = AppState.glucoseReadings.map(r => r.val);
     const avg = Math.round(vals.reduce((a, b) => a + b, 0) / vals.length);
     if (avgGlucoseEl) avgGlucoseEl.innerHTML = `${avg} <small>mg/dL</small>`;
+  } else {
+    if (avgGlucoseEl) avgGlucoseEl.innerHTML = `-- <small>mg/dL</small>`;
   }
 
-  if (AppState.reports.length > 0) {
+  if (AppState.reports && AppState.reports.length > 0) {
     const latest = AppState.reports[0];
-    if (lastRiskCat) lastRiskCat.textContent = latest.category;
+    const catDisplay = AppState.lang === 'hi'
+      ? (latest.category === 'High Risk' ? 'उच्च जोखिम' : (latest.category === 'Moderate Risk' ? 'मध्यम जोखिम' : 'कम जोखिम'))
+      : latest.category;
+
+    if (lastRiskCat) lastRiskCat.textContent = catDisplay;
     if (lastRiskPill) {
       lastRiskPill.className = 'status-badge';
       if (latest.category === 'High Risk') lastRiskPill.classList.add('status-elevated');
       else if (latest.category === 'Moderate Risk') lastRiskPill.classList.add('status-attention');
       else lastRiskPill.classList.add('status-healthy');
     }
-    if (lastPredTime) lastPredTime.textContent = `Assessed on ${latest.date}`;
+    if (lastPredTime) lastPredTime.textContent = AppState.lang === 'hi' ? `आकलन दिनांक: ${latest.date}` : `Assessed on ${latest.date}`;
 
     if (latestReportDate) latestReportDate.textContent = latest.date;
     if (latestReportRisk) {
-      latestReportRisk.textContent = `${latest.category} (${latest.risk}%)`;
+      latestReportRisk.textContent = `${catDisplay} (${latest.risk}%)`;
       latestReportRisk.style.color = latest.category === 'High Risk' ? 'var(--status-elevated)' : (latest.category === 'Moderate Risk' ? 'var(--status-attention)' : 'var(--primary)');
     }
     if (latestReportGlucose) latestReportGlucose.textContent = `${latest.glucose} mg/dL`;
+  } else {
+    if (lastRiskCat) lastRiskCat.textContent = AppState.lang === 'hi' ? 'कोई रिकॉर्ड नहीं' : 'No Assessment';
+    if (lastRiskPill) {
+      lastRiskPill.className = 'status-badge status-healthy';
+    }
+    if (lastPredTime) lastPredTime.textContent = AppState.lang === 'hi' ? 'पहला आकलन प्रारंभ करें' : 'Run your first assessment';
+    if (latestReportDate) latestReportDate.textContent = AppState.lang === 'hi' ? 'कोई आकलन रिकॉर्ड नहीं' : 'No assessments recorded';
+    if (latestReportRisk) {
+      latestReportRisk.textContent = '--';
+      latestReportRisk.style.color = 'var(--text-muted)';
+    }
+    if (latestReportGlucose) latestReportGlucose.textContent = '--';
   }
 }
 

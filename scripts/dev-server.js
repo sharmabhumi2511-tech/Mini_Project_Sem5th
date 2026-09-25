@@ -110,7 +110,7 @@ function pollBackendReady(maxAttempts = 30, intervalMs = 300) {
               const modelName = (parsed.data && parsed.data.model_name) || parsed.model_name || 'Active';
               resolve({ ok: true, modelName });
               return;
-            } catch (e) {}
+            } catch (e) { }
           }
           if (attempts < maxAttempts) setTimeout(probe, intervalMs);
           else resolve({ ok: false });
@@ -193,12 +193,12 @@ function setupGracefulShutdown() {
         try {
           execSync(`taskkill /pid ${pythonProcess.pid} /T /F`, { stdio: 'ignore' });
         } catch (e) {
-          try { pythonProcess.kill('SIGTERM'); } catch (err) {}
+          try { pythonProcess.kill('SIGTERM'); } catch (err) { }
         }
       } else {
         try {
           pythonProcess.kill('SIGTERM');
-        } catch (e) {}
+        } catch (e) { }
       }
     }
 
@@ -226,13 +226,14 @@ async function main() {
   console.log('\n' + '='.repeat(70));
   console.log('   GLUCOSESENSE / DIA-PREDICT — UNIFIED HEALTHCARE DECISION SUPPORT');
   console.log('='.repeat(70));
-  console.log(`   🌐 Web Application:   http://localhost:${CLIENT_PORT}`);
-  console.log(`   🔬 Python ML Service:  http://127.0.0.1:${BACKEND_PORT} (Internal)`);
-  console.log(`   🔀 API Reverse Proxy:  http://localhost:${CLIENT_PORT}/api -> :${BACKEND_PORT}/api`);
-  console.log(`   🩺 Health Diagnostic: http://localhost:${CLIENT_PORT}/api/health`);
-  console.log(`   🧠 Active ML Engine:  ${health.modelName || 'Loaded'}`);
+  console.log(`   🌐 LOCALHOST LINK:       http://localhost:${CLIENT_PORT}`);
+  console.log(`   👉 OPEN IN YOUR BROWSER: http://localhost:${CLIENT_PORT}`);
+  console.log(`   🔬 Python ML Service:    http://127.0.0.1:${BACKEND_PORT} (Internal)`);
+  console.log(`   🔀 API Reverse Proxy:    http://localhost:${CLIENT_PORT}/api -> :${BACKEND_PORT}/api`);
+  console.log(`   🩺 Health Diagnostic:   http://localhost:${CLIENT_PORT}/api/health`);
+  console.log(`   🧠 Active ML Engine:     ${health.modelName || 'Loaded'}`);
   console.log('='.repeat(70));
-  console.log('   [Ready] Press Ctrl+C to terminate all services gracefully.\n');
+  console.log(`   [Ready] Web application is live at: http://localhost:${CLIENT_PORT}\n`);
 
   if (SHOULD_OPEN_BROWSER) {
     try {
