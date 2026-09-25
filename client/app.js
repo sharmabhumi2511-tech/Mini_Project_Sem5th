@@ -31,6 +31,209 @@ const DEFAULT_GUEST_USER = {
   avatarBg: '#059669'
 };
 
+const BASELINE_CLINICAL_REPORTS = [
+  // 1. Low Risk (14%) - Optimal / Healthy
+  {
+    id: 'RPT-2026-0910',
+    date: '10 Sep 2026, 10:30 AM',
+    risk: 14,
+    category: 'Low Risk',
+    confidence: 89,
+    glucose: 92,
+    bmi: 22.4,
+    bp: 72,
+    pregnancies: 0,
+    skin: 18,
+    insulin: 72,
+    pedigree: 0.28,
+    age: 26,
+    shap: [
+      { feature: 'Fasting Blood Glucose', value: -0.48, impact: 'Protective (-0.48)' },
+      { feature: 'Body Mass Index (BMI)', value: -0.31, impact: 'Protective (-0.31)' },
+      { feature: 'Diastolic Blood Pressure', value: -0.18, impact: 'Protective (-0.18)' },
+      { feature: 'Genetic Pedigree Score', value: -0.15, impact: 'Protective (-0.15)' },
+      { feature: 'Serum Insulin', value: -0.08, impact: 'Protective (-0.08)' },
+      { feature: 'Demographic Age', value: 0.09, impact: 'Elevating (+0.09)' }
+    ],
+    isDemo: false,
+    modelName: 'Trained SVC Pipeline (Pima Indians Benchmark)'
+  },
+  // 2. Low Risk (22%) - Mild Demographics
+  {
+    id: 'RPT-2026-0904',
+    date: '04 Sep 2026, 09:15 AM',
+    risk: 22,
+    category: 'Low Risk',
+    confidence: 86,
+    glucose: 98,
+    bmi: 23.8,
+    bp: 76,
+    pregnancies: 1,
+    skin: 20,
+    insulin: 85,
+    pedigree: 0.42,
+    age: 28,
+    shap: [
+      { feature: 'Fasting Blood Glucose', value: -0.38, impact: 'Protective (-0.38)' },
+      { feature: 'Body Mass Index (BMI)', value: -0.22, impact: 'Protective (-0.22)' },
+      { feature: 'Diastolic Blood Pressure', value: -0.12, impact: 'Protective (-0.12)' },
+      { feature: 'Demographic Age', value: 0.12, impact: 'Elevating (+0.12)' },
+      { feature: 'Genetic Pedigree Score', value: 0.06, impact: 'Elevating (+0.06)' },
+      { feature: 'Serum Insulin', value: -0.04, impact: 'Protective (-0.04)' }
+    ],
+    isDemo: false,
+    modelName: 'Trained SVC Pipeline (Pima Indians Benchmark)'
+  },
+  // 3. Low Risk (26%) - Upper Normal Fasting
+  {
+    id: 'RPT-2026-0828',
+    date: '28 Aug 2026, 11:20 AM',
+    risk: 26,
+    category: 'Low Risk',
+    confidence: 84,
+    glucose: 104,
+    bmi: 24.2,
+    bp: 78,
+    pregnancies: 0,
+    skin: 22,
+    insulin: 92,
+    pedigree: 0.45,
+    age: 29,
+    shap: [
+      { feature: 'Fasting Blood Glucose', value: -0.20, impact: 'Protective (-0.20)' },
+      { feature: 'Body Mass Index (BMI)', value: -0.16, impact: 'Protective (-0.16)' },
+      { feature: 'Demographic Age', value: 0.12, impact: 'Elevating (+0.12)' },
+      { feature: 'Diastolic Blood Pressure', value: -0.08, impact: 'Protective (-0.08)' },
+      { feature: 'Genetic Pedigree Score', value: 0.08, impact: 'Elevating (+0.08)' },
+      { feature: 'Serum Insulin', value: 0.02, impact: 'Elevating (+0.02)' }
+    ],
+    isDemo: false,
+    modelName: 'Trained SVC Pipeline (Pima Indians Benchmark)'
+  },
+  // 4. Moderate Risk (38%) - Impaired Fasting Glucose & Overweight
+  {
+    id: 'RPT-2026-0815',
+    date: '15 Aug 2026, 02:45 PM',
+    risk: 38,
+    category: 'Moderate Risk',
+    confidence: 88,
+    glucose: 118,
+    bmi: 27.4,
+    bp: 82,
+    pregnancies: 2,
+    skin: 26,
+    insulin: 115,
+    pedigree: 0.58,
+    age: 36,
+    shap: [
+      { feature: 'Fasting Blood Glucose', value: 0.32, impact: 'Elevating (+0.32)' },
+      { feature: 'Body Mass Index (BMI)', value: 0.24, impact: 'Elevating (+0.24)' },
+      { feature: 'Demographic Age', value: 0.18, impact: 'Elevating (+0.18)' },
+      { feature: 'Genetic Pedigree Score', value: 0.12, impact: 'Elevating (+0.12)' },
+      { feature: 'Diastolic Blood Pressure', value: 0.08, impact: 'Elevating (+0.08)' },
+      { feature: 'Serum Insulin', value: 0.06, impact: 'Elevating (+0.06)' }
+    ],
+    isDemo: false,
+    modelName: 'Trained SVC Pipeline (Pima Indians Benchmark)'
+  },
+  // 5. Moderate Risk (46%) - Pre-Diabetic Corridor
+  {
+    id: 'RPT-2026-0801',
+    date: '01 Aug 2026, 10:10 AM',
+    risk: 46,
+    category: 'Moderate Risk',
+    confidence: 85,
+    glucose: 124,
+    bmi: 28.9,
+    bp: 84,
+    pregnancies: 1,
+    skin: 28,
+    insulin: 130,
+    pedigree: 0.65,
+    age: 42,
+    shap: [
+      { feature: 'Fasting Blood Glucose', value: 0.41, impact: 'Elevating (+0.41)' },
+      { feature: 'Body Mass Index (BMI)', value: 0.31, impact: 'Elevating (+0.31)' },
+      { feature: 'Demographic Age', value: 0.25, impact: 'Elevating (+0.25)' },
+      { feature: 'Genetic Pedigree Score', value: 0.16, impact: 'Elevating (+0.16)' },
+      { feature: 'Diastolic Blood Pressure', value: 0.10, impact: 'Elevating (+0.10)' },
+      { feature: 'Serum Insulin', value: 0.08, impact: 'Elevating (+0.08)' }
+    ],
+    isDemo: false,
+    modelName: 'Trained SVC Pipeline (Pima Indians Benchmark)'
+  },
+  // 6. High Risk (72%) - Clinical Metabolic Syndrome
+  {
+    id: 'RPT-2026-0718',
+    date: '18 Jul 2026, 04:15 PM',
+    risk: 72,
+    category: 'High Risk',
+    confidence: 91,
+    glucose: 168,
+    bmi: 33.5,
+    bp: 90,
+    pregnancies: 3,
+    skin: 34,
+    insulin: 195,
+    pedigree: 0.88,
+    age: 48,
+    shap: [
+      { feature: 'Fasting Blood Glucose', value: 0.78, impact: 'Elevating (+0.78)' },
+      { feature: 'Body Mass Index (BMI)', value: 0.54, impact: 'Elevating (+0.54)' },
+      { feature: 'Demographic Age', value: 0.38, impact: 'Elevating (+0.38)' },
+      { feature: 'Genetic Pedigree Score', value: 0.32, impact: 'Elevating (+0.32)' },
+      { feature: 'Serum Insulin', value: 0.22, impact: 'Elevating (+0.22)' },
+      { feature: 'Diastolic Blood Pressure', value: 0.18, impact: 'Elevating (+0.18)' }
+    ],
+    isDemo: false,
+    modelName: 'Trained SVC Pipeline (Pima Indians Benchmark)'
+  },
+  // 7. High Risk (86%) - Severe Hyperglycemic Diabetes
+  {
+    id: 'RPT-2026-0630',
+    date: '30 Jun 2026, 11:45 AM',
+    risk: 86,
+    category: 'High Risk',
+    confidence: 94,
+    glucose: 192,
+    bmi: 36.8,
+    bp: 94,
+    pregnancies: 4,
+    skin: 38,
+    insulin: 240,
+    pedigree: 1.15,
+    age: 54,
+    shap: [
+      { feature: 'Fasting Blood Glucose', value: 0.95, impact: 'Elevating (+0.95)' },
+      { feature: 'Body Mass Index (BMI)', value: 0.68, impact: 'Elevating (+0.68)' },
+      { feature: 'Genetic Pedigree Score', value: 0.48, impact: 'Elevating (+0.48)' },
+      { feature: 'Demographic Age', value: 0.42, impact: 'Elevating (+0.42)' },
+      { feature: 'Serum Insulin', value: 0.35, impact: 'Elevating (+0.35)' },
+      { feature: 'Diastolic Blood Pressure', value: 0.25, impact: 'Elevating (+0.25)' }
+    ],
+    isDemo: false,
+    modelName: 'Trained SVC Pipeline (Pima Indians Benchmark)'
+  }
+];
+
+function getBaselineReports() {
+  return JSON.parse(JSON.stringify(BASELINE_CLINICAL_REPORTS));
+}
+
+const BASELINE_GLUCOSE_READINGS = [
+  { id: 1, val: 98, context: 'Fasting', date: 'Today, 08:30 AM', note: 'Morning resting check' },
+  { id: 2, val: 112, context: 'After meal', date: 'Yesterday, 01:15 PM', note: 'Post lunch walk completed' },
+  { id: 3, val: 102, context: 'Before meal', date: '08 Sep, 12:45 PM', note: 'Pre-lunch check' },
+  { id: 4, val: 108, context: 'Random', date: '07 Sep, 04:30 PM', note: 'Mid-afternoon check' },
+  { id: 5, val: 97, context: 'Fasting', date: '06 Sep, 08:00 AM', note: 'Resting baseline' },
+  { id: 6, val: 104, context: 'Bedtime', date: '05 Sep, 10:30 PM', note: 'Evening check' },
+  { id: 7, val: 95, context: 'Fasting', date: '04 Sep, 08:15 AM', note: 'Optimal fasting level' }
+];
+
+function getBaselineGlucose() {
+  return JSON.parse(JSON.stringify(BASELINE_GLUCOSE_READINGS));
+}
+
 const AppState = {
   theme: localStorage.getItem('diapredict_theme') || 'light',
   lang: localStorage.getItem('diapredict_lang') || 'en',
@@ -39,86 +242,8 @@ const AppState = {
   user: { ...DEFAULT_GUEST_USER },
   latestAssessment: null,
   activeDetailReport: null,
-  reports: [
-    {
-      id: 'RPT-2026-0910',
-      date: '10 Sep 2026, 10:30 AM',
-      risk: 18,
-      category: 'Low Risk',
-      confidence: 87,
-      glucose: 98,
-      bmi: 23.8,
-      bp: 76,
-      pregnancies: 0,
-      skin: 20,
-      insulin: 85,
-      pedigree: 0.45,
-      age: 28,
-      shap: [
-        { feature: 'Fasting Blood Glucose', value: -0.42, impact: 'Protective (-0.42)' },
-        { feature: 'Body Mass Index (BMI)', value: -0.22, impact: 'Protective (-0.22)' },
-        { feature: 'Demographic Age', value: 0.12, impact: 'Elevating (+0.12)' },
-        { feature: 'Diastolic Blood Pressure', value: -0.15, impact: 'Protective (-0.15)' },
-        { feature: 'Genetic Pedigree Score', value: 0.08, impact: 'Elevating (+0.08)' },
-        { feature: 'Serum Insulin', value: -0.05, impact: 'Protective (-0.05)' }
-      ]
-    },
-    {
-      id: 'RPT-2026-0904',
-      date: '04 Sep 2026, 09:15 AM',
-      risk: 22,
-      category: 'Low Risk',
-      confidence: 85,
-      glucose: 104,
-      bmi: 23.9,
-      bp: 78,
-      pregnancies: 0,
-      skin: 20,
-      insulin: 88,
-      pedigree: 0.45,
-      age: 28,
-      shap: [
-        { feature: 'Fasting Blood Glucose', value: -0.28, impact: 'Protective (-0.28)' },
-        { feature: 'Body Mass Index (BMI)', value: -0.20, impact: 'Protective (-0.20)' },
-        { feature: 'Demographic Age', value: 0.12, impact: 'Elevating (+0.12)' },
-        { feature: 'Diastolic Blood Pressure', value: -0.10, impact: 'Protective (-0.10)' },
-        { feature: 'Genetic Pedigree Score', value: 0.08, impact: 'Elevating (+0.08)' },
-        { feature: 'Serum Insulin', value: -0.04, impact: 'Protective (-0.04)' }
-      ]
-    },
-    {
-      id: 'RPT-2026-0828',
-      date: '28 Aug 2026, 11:20 AM',
-      risk: 26,
-      category: 'Low Risk',
-      confidence: 84,
-      glucose: 110,
-      bmi: 24.1,
-      bp: 80,
-      pregnancies: 0,
-      skin: 22,
-      insulin: 92,
-      pedigree: 0.45,
-      age: 28,
-      shap: [
-        { feature: 'Fasting Blood Glucose', value: -0.15, impact: 'Protective (-0.15)' },
-        { feature: 'Body Mass Index (BMI)', value: -0.16, impact: 'Protective (-0.16)' },
-        { feature: 'Demographic Age', value: 0.12, impact: 'Elevating (+0.12)' },
-        { feature: 'Diastolic Blood Pressure', value: 0.04, impact: 'Elevating (+0.04)' },
-        { feature: 'Genetic Pedigree Score', value: 0.08, impact: 'Elevating (+0.08)' },
-        { feature: 'Serum Insulin', value: 0.02, impact: 'Elevating (+0.02)' }
-      ]
-    }
-  ],
-  glucoseReadings: [
-    { id: 1, val: 98, context: 'Fasting', date: 'Today, 08:30 AM', note: 'Morning resting check' },
-    { id: 2, val: 112, context: 'After meal', date: 'Yesterday, 01:15 PM', note: 'Post lunch walk completed' },
-    { id: 3, val: 102, context: 'Before meal', date: '08 Sep, 12:45 PM', note: 'Pre-lunch check' },
-    { id: 4, val: 108, context: 'Random', date: '07 Sep, 04:30 PM', note: 'Mid-afternoon check' },
-    { id: 5, val: 97, context: 'Fasting', date: '06 Sep, 08:00 AM', note: 'Resting baseline' },
-    { id: 6, val: 104, context: 'Bedtime', date: '05 Sep, 10:30 PM', note: 'Evening check' },
-    { id: 7, val: 95, context: 'Fasting', date: '04 Sep, 08:15 AM', note: 'Optimal fasting level' }
-  ],
+  reports: getBaselineReports(),
+  glucoseReadings: getBaselineGlucose(),
   filters: {
     query: '',
     risk: 'all',
@@ -176,15 +301,24 @@ function loadUserReports(email) {
   try {
     const key = getUserDataKey(email, 'diapredict_reports');
     const data = localStorage.getItem(key);
-    if (data) return JSON.parse(data);
-    if (!email || email === 'guest@example.com') {
-      const global = localStorage.getItem('diapredict_reports');
-      if (global) return JSON.parse(global);
-      return AppState.reports;
+    if (data) {
+      const parsed = JSON.parse(data);
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        return parsed;
+      }
     }
-    return [];
+    const global = localStorage.getItem('diapredict_reports');
+    if (global) {
+      const parsedGlobal = JSON.parse(global);
+      if (Array.isArray(parsedGlobal) && parsedGlobal.length > 0) {
+        return parsedGlobal;
+      }
+    }
+    const baseline = getBaselineReports();
+    saveUserReports(email, baseline);
+    return baseline;
   } catch (e) {
-    return [];
+    return getBaselineReports();
   }
 }
 
@@ -192,7 +326,9 @@ function saveUserReports(email, reports) {
   try {
     const key = getUserDataKey(email, 'diapredict_reports');
     localStorage.setItem(key, JSON.stringify(reports));
-    localStorage.setItem('diapredict_reports', JSON.stringify(reports));
+    if (Array.isArray(reports) && reports.length > 0) {
+      localStorage.setItem('diapredict_reports', JSON.stringify(reports));
+    }
   } catch (e) {
     console.warn('Failed to save reports:', e);
   }
@@ -202,15 +338,24 @@ function loadUserGlucose(email) {
   try {
     const key = getUserDataKey(email, 'diapredict_glucose');
     const data = localStorage.getItem(key);
-    if (data) return JSON.parse(data);
-    if (!email || email === 'guest@example.com') {
-      const global = localStorage.getItem('diapredict_glucose');
-      if (global) return JSON.parse(global);
-      return AppState.glucoseReadings;
+    if (data) {
+      const parsed = JSON.parse(data);
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        return parsed;
+      }
     }
-    return [];
+    const global = localStorage.getItem('diapredict_glucose');
+    if (global) {
+      const parsedGlobal = JSON.parse(global);
+      if (Array.isArray(parsedGlobal) && parsedGlobal.length > 0) {
+        return parsedGlobal;
+      }
+    }
+    const baseline = getBaselineGlucose();
+    saveUserGlucose(email, baseline);
+    return baseline;
   } catch (e) {
-    return [];
+    return getBaselineGlucose();
   }
 }
 
@@ -218,7 +363,9 @@ function saveUserGlucose(email, glucoseList) {
   try {
     const key = getUserDataKey(email, 'diapredict_glucose');
     localStorage.setItem(key, JSON.stringify(glucoseList));
-    localStorage.setItem('diapredict_glucose', JSON.stringify(glucoseList));
+    if (Array.isArray(glucoseList) && glucoseList.length > 0) {
+      localStorage.setItem('diapredict_glucose', JSON.stringify(glucoseList));
+    }
   } catch (e) {
     console.warn('Failed to save glucose:', e);
   }
@@ -232,23 +379,22 @@ try {
     if (parsed && (parsed.email === 'ayush.sharma@example.com' || parsed.name === 'Ayush Sharma')) {
       localStorage.removeItem('diapredict_user');
       AppState.user = { ...DEFAULT_GUEST_USER };
+      AppState.reports = loadUserReports('guest@example.com');
+      AppState.glucoseReadings = loadUserGlucose('guest@example.com');
     } else if (parsed && parsed.name) {
       AppState.user = { ...DEFAULT_GUEST_USER, ...parsed };
       AppState.reports = loadUserReports(AppState.user.email);
       AppState.glucoseReadings = loadUserGlucose(AppState.user.email);
     }
   } else {
-    const savedReports = localStorage.getItem('diapredict_reports');
-    if (savedReports) AppState.reports = JSON.parse(savedReports);
-
-    const savedGlucose = localStorage.getItem('diapredict_glucose');
-    if (savedGlucose) AppState.glucoseReadings = JSON.parse(savedGlucose);
+    AppState.reports = loadUserReports('guest@example.com');
+    AppState.glucoseReadings = loadUserGlucose('guest@example.com');
   }
 } catch (e) {
   console.warn('LocalStorage hydration notice:', e);
 }
 
-if (AppState.reports.length > 0) {
+if (AppState.reports && AppState.reports.length > 0) {
   AppState.latestAssessment = AppState.reports[0];
   AppState.activeDetailReport = AppState.reports[0];
 } else {
@@ -770,6 +916,8 @@ function applyTranslations(lang) {
     if (val) {
       if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
         el.value = val;
+      } else if (val.includes('<') && val.includes('>')) {
+        el.innerHTML = val;
       } else {
         el.textContent = val;
       }
@@ -1184,12 +1332,21 @@ function setupEventListeners() {
   document.getElementById('settingsLangHiBtn')?.addEventListener('click', () => setLanguage('hi'));
 
   document.getElementById('logoutBtn')?.addEventListener('click', () => {
+    if (AppState.user && AppState.user.email) {
+      if (Array.isArray(AppState.reports) && AppState.reports.length > 0) {
+        saveUserReports(AppState.user.email, AppState.reports);
+      }
+      if (Array.isArray(AppState.glucoseReadings) && AppState.glucoseReadings.length > 0) {
+        saveUserGlucose(AppState.user.email, AppState.glucoseReadings);
+      }
+    }
+
     localStorage.removeItem('diapredict_user');
     AppState.user = { ...DEFAULT_GUEST_USER };
-    AppState.reports = [];
-    AppState.glucoseReadings = [];
-    AppState.latestAssessment = null;
-    AppState.activeDetailReport = null;
+    AppState.reports = loadUserReports('guest@example.com');
+    AppState.glucoseReadings = loadUserGlucose('guest@example.com');
+    AppState.latestAssessment = AppState.reports.length > 0 ? AppState.reports[0] : null;
+    AppState.activeDetailReport = AppState.latestAssessment;
     updateUserUI();
     renderDashboardOverview();
     renderReportsTable();
@@ -1275,8 +1432,6 @@ function setupEventListeners() {
     const existing = findRegisteredAccount(email);
     if (existing) {
       AppState.user = { ...existing };
-      AppState.reports = loadUserReports(existing.email);
-      AppState.glucoseReadings = loadUserGlucose(existing.email);
     } else {
       const derivedName = deriveNameFromEmail(email);
       const newUser = {
@@ -1289,12 +1444,11 @@ function setupEventListeners() {
         avatarBg: '#059669'
       };
       AppState.user = newUser;
-      AppState.reports = [];
-      AppState.glucoseReadings = [];
       saveRegisteredAccount(newUser);
-      saveUserReports(email, []);
-      saveUserGlucose(email, []);
     }
+
+    AppState.reports = loadUserReports(email);
+    AppState.glucoseReadings = loadUserGlucose(email);
 
     AppState.latestAssessment = AppState.reports.length > 0 ? AppState.reports[0] : null;
     AppState.activeDetailReport = AppState.latestAssessment;
@@ -1356,15 +1510,13 @@ function setupEventListeners() {
     };
 
     AppState.user = newUser;
-    AppState.reports = [];
-    AppState.glucoseReadings = [];
-    AppState.latestAssessment = null;
-    AppState.activeDetailReport = null;
-
-    localStorage.setItem('diapredict_user', JSON.stringify(AppState.user));
     saveRegisteredAccount(AppState.user);
-    saveUserReports(email, []);
-    saveUserGlucose(email, []);
+    localStorage.setItem('diapredict_user', JSON.stringify(AppState.user));
+
+    AppState.reports = loadUserReports(email);
+    AppState.glucoseReadings = loadUserGlucose(email);
+    AppState.latestAssessment = AppState.reports.length > 0 ? AppState.reports[0] : null;
+    AppState.activeDetailReport = AppState.latestAssessment;
 
     updateUserUI();
     renderDashboardOverview();
@@ -1826,6 +1978,15 @@ async function handlePredictionSubmit(e) {
     AppState.latestAssessment = assessment;
     AppState.activeDetailReport = assessment;
 
+    // Immediately record to user history so assessments persist across logout/login
+    const existingIndex = AppState.reports.findIndex(r => r.id === assessment.id);
+    if (existingIndex === -1) {
+      AppState.reports.unshift(assessment);
+      saveUserReports(AppState.user?.email, AppState.reports);
+      renderReportsTable();
+      renderDashboardOverview();
+    }
+
     displayPredictionResult(assessment);
     navigateTo('result');
     showToast('Your health assessment is ready.', 'success');
@@ -2119,15 +2280,21 @@ function showReportDetail(report) {
 
   const tbody = document.getElementById('detailMetricsTableBody');
   if (tbody) {
+    const glucoseStatus = report.glucose <= 99 ? 'Normal range' : (report.glucose <= 125 ? 'Pre-diabetic range' : 'Elevated (Hyperglycemia)');
+    const bmiStatus = report.bmi < 18.5 ? 'Underweight' : (report.bmi < 25 ? 'Normal weight' : (report.bmi < 30 ? 'Overweight range' : 'Obese range'));
+    const bpStatus = report.bp <= 80 ? 'Optimal' : (report.bp <= 89 ? 'Pre-hypertensive' : 'Hypertensive');
+    const insulinStatus = (report.insulin || 85) <= 166 ? 'Normal reference' : 'Elevated (Hyperinsulinemia)';
+    const pedigreeStatus = (report.pedigree || 0.45) < 0.4 ? 'Low genetic risk' : ((report.pedigree || 0.45) <= 0.8 ? 'Moderate family history' : 'High familial risk');
+
     tbody.innerHTML = `
-      <tr><td>Fasting Blood Glucose</td><td><strong>${report.glucose} mg/dL</strong></td><td>70 – 99 mg/dL</td><td>${report.glucose <= 99 ? 'Normal range' : (report.glucose <= 125 ? 'Pre-diabetic range' : 'Elevated')}</td></tr>
-      <tr><td>Body Mass Index (BMI)</td><td><strong>${report.bmi} kg/m²</strong></td><td>18.5 – 24.9 kg/m²</td><td>${report.bmi < 25 ? 'Normal weight' : 'Overweight range'}</td></tr>
-      <tr><td>Diastolic Blood Pressure</td><td><strong>${report.bp} mm Hg</strong></td><td>60 – 80 mm Hg</td><td>${report.bp <= 80 ? 'Optimal' : 'Pre-hypertensive'}</td></tr>
+      <tr><td>Fasting Blood Glucose</td><td><strong>${report.glucose} mg/dL</strong></td><td>70 – 99 mg/dL</td><td>${glucoseStatus}</td></tr>
+      <tr><td>Body Mass Index (BMI)</td><td><strong>${report.bmi} kg/m²</strong></td><td>18.5 – 24.9 kg/m²</td><td>${bmiStatus}</td></tr>
+      <tr><td>Diastolic Blood Pressure</td><td><strong>${report.bp} mm Hg</strong></td><td>60 – 80 mm Hg</td><td>${bpStatus}</td></tr>
       <tr><td>Age</td><td><strong>${report.age || 28} years</strong></td><td>Adult cohort</td><td>Demographic baseline</td></tr>
-      <tr><td>Serum Insulin</td><td><strong>${report.insulin || 85} µIU/mL</strong></td><td>16 – 166 µIU/mL</td><td>Normal reference</td></tr>
-      <tr><td>Skin Thickness</td><td><strong>${report.skin || 20} mm</strong></td><td>10 – 30 mm</td><td>Normal range</td></tr>
+      <tr><td>Serum Insulin</td><td><strong>${report.insulin || 85} µIU/mL</strong></td><td>16 – 166 µIU/mL</td><td>${insulinStatus}</td></tr>
+      <tr><td>Skin Thickness</td><td><strong>${report.skin || 20} mm</strong></td><td>10 – 30 mm</td><td>${(report.skin || 20) <= 30 ? 'Normal range' : 'Elevated subcutaneous layer'}</td></tr>
       <tr><td>Pregnancies</td><td><strong>${report.pregnancies || 0}</strong></td><td>0 – 20</td><td>Clinical history</td></tr>
-      <tr><td>Diabetes Pedigree Function</td><td><strong>${report.pedigree || 0.45}</strong></td><td>0.08 – 2.42</td><td>Family score baseline</td></tr>
+      <tr><td>Diabetes Pedigree Function</td><td><strong>${report.pedigree || 0.45}</strong></td><td>0.08 – 2.42</td><td>${pedigreeStatus}</td></tr>
     `;
   }
 

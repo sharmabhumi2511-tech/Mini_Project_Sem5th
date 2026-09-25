@@ -433,9 +433,15 @@ img, svg {
   color: var(--primary);
   margin-bottom: 0.85rem;
   text-transform: uppercase;
-  display: flex;
+  display: inline-flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 0.5rem;
+}
+
+.hero-eyebrow span {
+  display: inline-block;
+  color: var(--primary);
 }
 
 .hero-content h1 {

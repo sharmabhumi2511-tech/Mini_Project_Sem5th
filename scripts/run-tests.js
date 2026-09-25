@@ -63,6 +63,19 @@ try {
   failures++;
 }
 
+// 4. Data Persistence & Multi-Risk Reports Verification
+console.log('\n[*] Running Logout/Login Data Persistence & Multi-Risk Report Test (tests/test_logout_login_persistence.js)...');
+try {
+  execSync('node tests/test_logout_login_persistence.js', {
+    cwd: PROJECT_ROOT,
+    stdio: 'inherit'
+  });
+  console.log('[PASS] Data persistence and multi-risk reports verified.');
+} catch (e) {
+  console.error('[FAIL] Data persistence test failed.');
+  failures++;
+}
+
 console.log('\n' + '='.repeat(70));
 if (failures === 0) {
   console.log('[SUCCESS] All GlucoseSense tests passed cleanly!');
